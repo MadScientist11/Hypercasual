@@ -1,43 +1,85 @@
 using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
+using UnityEngine.Serialization;
 
 namespace Hypercasual
 {
     public interface IPickable
     {
-        
     }
+
     public class PlayerPickUpItem : MonoBehaviour
     {
-        [SerializeField] private PlayerFrustum _playerFrustum;
+        [SerializeField] private PlayerReachZone playerReachZone;
+
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private Transform _handIKTarget;
         [SerializeField] private Transform _hand;
+        [SerializeField] private LayerMask _itemMask;
+        [SerializeField] private Transform _fallInBasketPoint;
         public event Action OnItemGrabbed;
+        private Item _currentItem;
 
-        private void OnEnable()
+        private void GrabItem(Item item)
         {
-            _playerFrustum.OnItemEnterPlayerFrustum += _ => _playerAnimator.PlayGrabItemAnimation();
-            _playerFrustum.OnItemIsInsidePlayerFrustum += TryReachItem;
-        }
-
-        private void OnDisable()
-        {
-            _playerFrustum.OnItemIsInsidePlayerFrustum -= TryReachItem;
-        }
-
-        private void TryReachItem(Item item)
-        {
-            if(item.IsProcessed) return;
-           
+            if (item.IsProcessed) return;
             SetIK(item);
-            float distance = Vector3.Distance(_hand.position, item.transform.position);
-            if (distance < 0.6f)
+            Debug.Log("GRab Item");
+            item.IsProcessed = true;
+            item.transform.SetParent(_hand);
+            item.transform.localPosition = Vector3.zero;
+            _currentItem = item;
+            _playerAnimator.PlayGrabItemAnimation();
+        }
+
+        private void AnimationEventCallback_OnItemPlacedInBasket()
+        {
+            Debug.Log("EndANim");
+            _currentItem.transform.SetParent(null);
+            _currentItem.transform.position = _fallInBasketPoint.position;
+            _currentItem.transform.localScale = Vector3.one*0.1f;
+            _currentItem.transform.AddComponent<Rigidbody>();
+            _currentItem = null;
+        }
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
             {
-                
-                _playerAnimator.PlayGrabItemBackAnimation();
-                item.IsProcessed = true;
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hit, 100, _itemMask))
+                {
+                    Transform objectHit = hit.transform;
+                    if (objectHit.TryGetComponent<Item>(out var item))
+                    {
+                        Debug.Log(playerReachZone.Contains(item.transform.position));
+                        GrabItem(item);
+                    }
+                }
             }
+        }
+
+        private IEnumerator TryReachItem(Item item)
+        {
+            if (item.IsProcessed) yield break;
+
+            float distance = Vector3.Distance(_hand.position, item.transform.position);
+            while (distance > 0.6f)
+            {
+                SetIK(item);
+                yield return null;
+            }
+
+            item.IsProcessed = true;
+            item.transform.SetParent(_hand);
+            item.transform.localPosition = Vector3.zero;
+            item.transform.localRotation = Quaternion.identity;
+            _playerAnimator.PlayGrabItemBackAnimation();
         }
 
         private void SetIK(Item item)

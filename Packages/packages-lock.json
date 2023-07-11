@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.acegikmo.mathfs": {
+      "version": "https://github.com/FreyaHolmer/Mathfs.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "06385c0b06cc4e0297747a78b55fd01c50a86701"
+    },
     "com.unity.animation.rigging": {
       "version": "1.1.1",
       "depth": 0,
