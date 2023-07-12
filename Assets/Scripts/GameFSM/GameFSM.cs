@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using Hypercasual.Player;
+using Hypercasual.Services;
 
-namespace Hypercasual.Services
+namespace Hypercasual.GameFSM
 {
     public class GameFSM
     {

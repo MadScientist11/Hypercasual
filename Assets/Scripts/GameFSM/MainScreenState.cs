@@ -1,7 +1,7 @@
 using Hypercasual.Player;
 using Hypercasual.UI;
 
-namespace Hypercasual.Services
+namespace Hypercasual.GameFSM
 {
     public class MainScreenState : IGameState
     {

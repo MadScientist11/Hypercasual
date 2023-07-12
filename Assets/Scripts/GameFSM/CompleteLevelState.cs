@@ -1,4 +1,4 @@
-namespace Hypercasual.Services
+namespace Hypercasual.GameFSM
 {
     public class CompleteLevelState : IGameState
     {
