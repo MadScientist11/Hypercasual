@@ -20,6 +20,7 @@ namespace Hypercasual.AssemblyLine
         private HashSet<Item> _foodOnTheLine;
         private HashSet<Item> _foodToPool;
 
+        private Coroutine _assemblyLineCoroutine;
 
         [Inject]
         public void Construct(IGameFactory gameFactory)
@@ -31,7 +32,7 @@ namespace Hypercasual.AssemblyLine
         {
             _foodOnTheLine = new HashSet<Item>();
             _foodToPool = new HashSet<Item>();
-            StartCoroutine(StartAssemblyLine());
+            RestartAssemblyLine();
         }
 
         private void Update()
@@ -52,6 +53,22 @@ namespace Hypercasual.AssemblyLine
             }
         }
 
+        public void RestartAssemblyLine()
+        {
+            foreach (Item food in _foodOnTheLine)
+            {
+                ReturnToPool(food);
+            }
+
+            _foodToPool.Clear();
+            _foodOnTheLine.Clear();
+
+            if (_assemblyLineCoroutine != null)
+                StopCoroutine(_assemblyLineCoroutine);
+            
+            _assemblyLineCoroutine = StartCoroutine(StartAssemblyLine());
+        }
+
         private void ReturnToPool(Item food) =>
             food.Hide();
 
@@ -63,11 +80,12 @@ namespace Hypercasual.AssemblyLine
 
         private IEnumerator StartAssemblyLine()
         {
+            WaitForSeconds assemblySpawnWait = new WaitForSeconds(_assemblyLineConfig.FoodSpawnFrequency);
             while (true)
             {
                 Item food = SpawnFood();
                 _foodOnTheLine.Add(food);
-                yield return new WaitForSeconds(3);
+                yield return assemblySpawnWait;
             }
         }
 

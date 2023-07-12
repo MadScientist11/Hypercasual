@@ -14,17 +14,22 @@ namespace Hypercasual.Services
 
     public class Game
     {
-        public Dictionary<GameFlow, IGameState> States { get; }
-        private IGameState _currentState;
+        public AssemblyLine.AssemblyLine AssemblyLine { get; }
         public IGameFactory GameFactory { get; }
         public IWindowManager WindowManager { get; }
         public PlayerAnimator Player { get; }
 
 
-        public Game(IGameFactory gameFactory, IWindowManager windowManager, PlayerAnimator player)
+        private readonly Dictionary<GameFlow, IGameState> _states;
+        private IGameState _currentState;
+
+
+        public Game(IGameFactory gameFactory, IWindowManager windowManager, PlayerAnimator player,
+            AssemblyLine.AssemblyLine assemblyLine)
         {
+            AssemblyLine = assemblyLine;
             Player = player;
-            States = new Dictionary<GameFlow, IGameState>
+            _states = new Dictionary<GameFlow, IGameState>
             {
                 { GameFlow.InitGame, new InitGameState(this) },
                 { GameFlow.MainScreenState, new MainScreenState(this) },
@@ -38,7 +43,7 @@ namespace Hypercasual.Services
         public void SwitchState(GameFlow gameFlow)
         {
             _currentState?.Exit();
-            _currentState = States[gameFlow];
+            _currentState = _states[gameFlow];
             _currentState.Enter();
         }
     }
@@ -60,7 +65,7 @@ namespace Hypercasual.Services
 
     public class StartLevelState : IGameState
     {
-        private Game _context;
+        private readonly Game _context;
 
         public StartLevelState(Game context)
         {
@@ -70,9 +75,10 @@ namespace Hypercasual.Services
         public void Enter()
         {
             EnablePlayerLogic();
+            _context.AssemblyLine.RestartAssemblyLine();
         }
 
-        private void EnablePlayerLogic() => 
+        private void EnablePlayerLogic() =>
             _context.Player.GetComponent<PlayerPickUpItem>().enabled = true;
 
         public void Exit()
@@ -123,7 +129,7 @@ namespace Hypercasual.Services
             _mainScreen.Initialize(() => _context.SwitchState(GameFlow.StartLevel));
         }
 
-        private void DisablePlayerLogic() => 
+        private void DisablePlayerLogic() =>
             _context.Player.GetComponent<PlayerPickUpItem>().enabled = false;
 
         public void Exit()

@@ -454,6 +454,7 @@ MonoBehaviour:
   - {fileID: 6183460126725212338}
   - {fileID: 1019967600}
   _player: {fileID: 6183460126725212340}
+  _assemblyLine: {fileID: 1019967601}
 --- !u!1 &647290801
 GameObject:
   m_ObjectHideFlags: 0

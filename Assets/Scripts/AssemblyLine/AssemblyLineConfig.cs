@@ -6,5 +6,6 @@ namespace Hypercasual.AssemblyLine
     public class AssemblyLineConfig : ScriptableObject
     {
         public float AssemblyLineSpeed;
+        public float FoodSpawnFrequency;
     }
 }
