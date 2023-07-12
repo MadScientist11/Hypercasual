@@ -22,6 +22,11 @@ namespace Hypercasual
             _objectPool = objectPool;
         }
 
+        public void Hide()
+        {
+            _objectPool.Release(this);
+        }
+
         private void Update()
         {
             if (!_renderer.isVisible)

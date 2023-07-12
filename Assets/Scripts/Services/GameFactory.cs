@@ -3,7 +3,11 @@ using UnityEngine.Pool;
 
 namespace Hypercasual
 {
-    public class GameFactory
+    public interface  IGameFactory : IService
+    {
+        Item GetOrCreateFood(FoodType foodType, Vector3 position);
+    }
+    public class GameFactory : IGameFactory
     {
         private const string BananaPath = "Banana";
         private const string ApplePath = "Apple";
@@ -26,7 +30,12 @@ namespace Hypercasual
                 15);
         }
 
+        public void Initialize()
+        {
+        }
+
         private GameObject _foodParent;
+
         private Item CreateFood()
         {
             _foodParent ??= new GameObject("Foods");

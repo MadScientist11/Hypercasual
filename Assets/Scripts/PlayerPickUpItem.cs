@@ -38,10 +38,16 @@ namespace Hypercasual
         private void AnimationEventCallback_OnItemPlacedInBasket()
         {
             Debug.Log("EndANim");
-            _currentItem.transform.SetParent(null);
-            _currentItem.transform.position = _fallInBasketPoint.position;
-            _currentItem.transform.localScale = Vector3.one*0.1f;
-            _currentItem.transform.AddComponent<Rigidbody>();
+            PlaceItemInBasket();
+        }
+
+        private void PlaceItemInBasket()
+        {
+            Transform itemTransform = _currentItem.transform;
+            itemTransform.SetParent(null);
+            itemTransform.position = _fallInBasketPoint.position;
+            itemTransform.localScale = Vector3.one * 0.1f;
+            itemTransform.GetComponent<Rigidbody>().isKinematic = false;
             _currentItem = null;
         }
 
@@ -57,8 +63,8 @@ namespace Hypercasual
                     Transform objectHit = hit.transform;
                     if (objectHit.TryGetComponent<Item>(out var item))
                     {
-                        Debug.Log(playerReachZone.Contains(item.transform.position));
-                        GrabItem(item);
+                        if (playerReachZone.Contains(item.transform.position))
+                            GrabItem(item);
                     }
                 }
             }

@@ -2,7 +2,12 @@ using UnityEngine;
 
 namespace Hypercasual
 {
-    public class AssetProvider
+    public interface IAssetProvider : IService
+    {
+        T LoadAsset<T>(string path) where T : Object;
+    }
+ 
+    public class AssetProvider : IAssetProvider
     {
         public void Initialize()
         {
