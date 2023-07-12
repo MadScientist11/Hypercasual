@@ -19,7 +19,7 @@ namespace Hypercasual.Services
     public class GameFactory : IGameFactory
     {
         private readonly IObjectResolver _instantiator;
-
+        private readonly IAssetProvider _assetProvider;
         
         private const string BananaPath = "Banana";
         private const string ApplePath = "Apple";
@@ -34,8 +34,9 @@ namespace Hypercasual.Services
         };
         private readonly ObjectPool<Item> _foodPool;
 
-        private readonly IAssetProvider _assetProvider;
         private FoodType _currentFoodType;
+        private GameObject _foodParent;
+        private UiRoot _uiRoot;
 
         public GameFactory(IObjectResolver instantiator, IAssetProvider assetProvider)
         {
@@ -53,8 +54,6 @@ namespace Hypercasual.Services
         {
         }
 
-        private GameObject _foodParent;
-        private UiRoot _uiRoot;
 
         private Item CreateFood()
         {

@@ -14,7 +14,7 @@ namespace Hypercasual.EntryPoints
             _game = game;
         }
         
-        private void Start()
+        private void Awake()
         {
             _game.SwitchState(GameFlow.InitGame);
         }

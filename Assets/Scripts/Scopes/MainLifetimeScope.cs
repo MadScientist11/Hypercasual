@@ -11,7 +11,6 @@ namespace Hypercasual.Scopes
         protected override void Configure(IContainerBuilder builder)
         {
             BindServices(builder);
-            builder.Register<Game>(Lifetime.Singleton);
         }
 
         private void BindServices(IContainerBuilder builder)

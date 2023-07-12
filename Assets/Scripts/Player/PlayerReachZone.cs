@@ -1,8 +1,7 @@
-using System;
 using Freya;
 using UnityEngine;
 
-namespace Hypercasual
+namespace Hypercasual.Player
 {
     public class PlayerReachZone : MonoBehaviour
     {

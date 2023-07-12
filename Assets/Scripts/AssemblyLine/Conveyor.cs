@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Hypercasual;
+using Hypercasual.Player;
 using Hypercasual.Services;
 using UnityEngine;
 using VContainer;
@@ -14,7 +15,7 @@ namespace Hypercasual
 
 
         [Inject]
-        public void Construct(IGameFactory gameFactory )
+        public void Construct(IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
         }

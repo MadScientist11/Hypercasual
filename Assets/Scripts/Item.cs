@@ -1,4 +1,5 @@
 using System;
+using Hypercasual.Player;
 using UnityEngine;
 using UnityEngine.Pool;
 

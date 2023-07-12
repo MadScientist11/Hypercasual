@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Hypercasual.UI;
+using Hypercasual.Player;
 
 namespace Hypercasual.Services
 {
@@ -15,13 +16,14 @@ namespace Hypercasual.Services
     {
         public Dictionary<GameFlow, IGameState> States { get; }
         private IGameState _currentState;
-
         public IGameFactory GameFactory { get; }
-        public IWindowManager WindowManager { get; set; }
+        public IWindowManager WindowManager { get; }
+        public PlayerAnimator Player { get; }
 
 
-        public Game(IGameFactory gameFactory, IWindowManager windowManager)
+        public Game(IGameFactory gameFactory, IWindowManager windowManager, PlayerAnimator player)
         {
+            Player = player;
             States = new Dictionary<GameFlow, IGameState>
             {
                 { GameFlow.InitGame, new InitGameState(this) },
@@ -58,13 +60,20 @@ namespace Hypercasual.Services
 
     public class StartLevelState : IGameState
     {
-        public StartLevelState(Game game)
+        private Game _context;
+
+        public StartLevelState(Game context)
         {
+            _context = context;
         }
 
         public void Enter()
         {
+            EnablePlayerLogic();
         }
+
+        private void EnablePlayerLogic() => 
+            _context.Player.GetComponent<PlayerPickUpItem>().enabled = true;
 
         public void Exit()
         {
@@ -100,13 +109,22 @@ namespace Hypercasual.Services
         {
             _context = context;
         }
-        
+
         public void Enter()
+        {
+            DisablePlayerLogic();
+            OpenMainMenuScreen();
+        }
+
+        private void OpenMainMenuScreen()
         {
             _context.GameFactory.GetOrCreateUIRoot();
             _mainScreen = _context.WindowManager.OpenScreen<MainScreen>();
             _mainScreen.Initialize(() => _context.SwitchState(GameFlow.StartLevel));
         }
+
+        private void DisablePlayerLogic() => 
+            _context.Player.GetComponent<PlayerPickUpItem>().enabled = true;
 
         public void Exit()
         {
