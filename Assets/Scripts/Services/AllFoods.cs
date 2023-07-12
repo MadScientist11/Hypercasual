@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Hypercasual.Services
 {
-    [CreateAssetMenu(menuName = "StaticData/AllFoods", fileName = "AllFoods")]
-    public class AllFoods : ScriptableObject, IEnumerable<Food>, IStaticData
+    [CreateAssetMenu(menuName = "Game/AllFoods", fileName = "AllFoods")]
+    public class AllFoods : ScriptableObject, IEnumerable<Food>, IData
     {
         [SerializeField] private Food[] _foodList;
         public Food this[int index] => _foodList[index];

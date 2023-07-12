@@ -1,6 +1,6 @@
 namespace Hypercasual.Services
 {
-    public interface IStaticData
+    public interface IData
     {
     }
 }

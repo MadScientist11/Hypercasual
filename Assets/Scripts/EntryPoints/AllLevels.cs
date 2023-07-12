@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Hypercasual.Services;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/LevelsContainer", fileName = "LevelsContainer")]
-public class AllLevels : ScriptableObject, IEnumerable<Level>, IStaticData
+[CreateAssetMenu(menuName = "Game/AllLevels", fileName = "AllLevels")]
+public class AllLevels : ScriptableObject, IEnumerable<Level>, IData
 {
     [SerializeField] private Level[] _levelList;
     public Level this[int index] => _levelList[index];

@@ -12,7 +12,7 @@ namespace Hypercasual.Services
     public class DataProvider : IDataProvider
     {
         private readonly IAssetProvider _assetProvider;
-        private readonly Dictionary<Type, IStaticData> _data;
+        private readonly Dictionary<Type, IData> _data;
 
         private const string AllFoodsPath = "AllFoods";
         private const string AllLevelsPath = "AllLevels";
@@ -21,7 +21,7 @@ namespace Hypercasual.Services
         public DataProvider(IAssetProvider assetProvider)
         {
             _assetProvider = assetProvider;
-            _data = new Dictionary<Type, IStaticData>();
+            _data = new Dictionary<Type, IData>();
         }
 
         public void Initialize()

@@ -124,7 +124,7 @@ namespace Hypercasual.Services
         }
 
         private void DisablePlayerLogic() => 
-            _context.Player.GetComponent<PlayerPickUpItem>().enabled = true;
+            _context.Player.GetComponent<PlayerPickUpItem>().enabled = false;
 
         public void Exit()
         {

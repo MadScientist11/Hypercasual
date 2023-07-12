@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Hypercasual.Services
 {
-    [CreateAssetMenu(menuName = "StaticData/Food", fileName = "Food")]
+    [CreateAssetMenu(menuName = "Game/Food", fileName = "Food")]
     public class Food : ScriptableObject
     {
         public FoodType Type;
