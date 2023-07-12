@@ -6,17 +6,17 @@ namespace Hypercasual.EntryPoints
 {
     public class GameEntryPoint : MonoBehaviour
     {
-        private Game _game;
+        private GameFSM _gameFsm;
 
         [Inject]
-        public void Construct(Game game)
+        public void Construct(GameFSM gameFsm)
         {
-            _game = game;
+            _gameFsm = gameFsm;
         }
         
         private void Awake()
         {
-            _game.SwitchState(GameFlow.InitGame);
+            _gameFsm.SwitchState(GameFlow.InitGame);
         }
 
         public void Restart()

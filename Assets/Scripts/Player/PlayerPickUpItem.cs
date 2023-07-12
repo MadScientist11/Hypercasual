@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
+using Hypercasual.Services;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Serialization;
+using VContainer;
 
 namespace Hypercasual.Player
 {
@@ -20,7 +22,15 @@ namespace Hypercasual.Player
         [SerializeField] private LayerMask _itemMask;
         [SerializeField] private Transform _fallInBasketPoint;
         public event Action OnItemGrabbed;
+        
         private Item _currentItem;
+        private ILevelService _levelService;
+
+        [Inject]
+        public void Construct(ILevelService levelService)
+        {
+            _levelService = levelService;
+        }
 
         private void GrabItem(Item item)
         {
@@ -47,6 +57,7 @@ namespace Hypercasual.Player
             itemTransform.position = _fallInBasketPoint.position;
             itemTransform.localScale = Vector3.one * 0.1f;
             itemTransform.GetComponent<Rigidbody>().isKinematic = false;
+            _levelService.CheckFood(_currentItem);
             _currentItem = null;
         }
 

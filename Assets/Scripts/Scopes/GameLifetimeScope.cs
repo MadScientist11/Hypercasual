@@ -13,7 +13,7 @@ public class GameLifetimeScope : LifetimeScope
     {
         builder.RegisterComponent(_player);
         builder.RegisterComponent(_assemblyLine);
-        builder.Register<Game>(Lifetime.Singleton);
+        builder.Register<GameFSM>(Lifetime.Singleton);
     }
 
     

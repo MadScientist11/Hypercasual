@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Hypercasual.Services
 {
-    public interface IDataProvider
+    public interface IDataProvider : IService
     {
         void Initialize();
         T GetData<T>();

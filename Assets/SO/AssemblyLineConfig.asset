@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: AssemblyLineConfig
   m_EditorClassIdentifier: 
   AssemblyLineSpeed: 1
+  FoodSpawnFrequency: 3

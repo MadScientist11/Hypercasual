@@ -4,6 +4,12 @@ using Hypercasual.UI;
 
 namespace Hypercasual.Services
 {
+    public interface IWindowManager : IService
+    {
+        T OpenScreen<T>() where T : BaseScreen;
+        void RefreshCurrentWindow();
+    }
+
     public class WindowManager : IWindowManager
     {
         private readonly Dictionary<Type, BaseScreen> _screensCache = new();
@@ -43,11 +49,5 @@ namespace Hypercasual.Services
         {
             _currentScreen.Refresh();
         }
-    }
-
-    public interface IWindowManager
-    {
-        T OpenScreen<T>() where T : BaseScreen;
-        void RefreshCurrentWindow();
     }
 }
