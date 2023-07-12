@@ -12,6 +12,7 @@ namespace Hypercasual.GameFSM
         public void Enter()
         {
             //Analytics
+            _context.Player.ResetAnimatorState();
             _context.SwitchState(GameFlow.MainScreenState);
         }
 

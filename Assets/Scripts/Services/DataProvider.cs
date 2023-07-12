@@ -5,7 +5,6 @@ namespace Hypercasual.Services
 {
     public interface IDataProvider : IService
     {
-        void Initialize();
         T GetData<T>();
     }
 

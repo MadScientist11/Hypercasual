@@ -28,11 +28,13 @@ namespace Hypercasual.Services
         private const string UiRootPath = "MainCanvas";
         private const string MainScreenPath = "MainScreen";
         private const string LevelUIPath = "LevelUI";
+        private const string WinScreenPath = "WinScreen";
         
         private readonly Dictionary<Type, string> _screenPaths = new()
         {
             { typeof(MainScreen), MainScreenPath },
             { typeof(LevelUI), LevelUIPath },
+            { typeof(WinScreen), WinScreenPath },
         };
         private readonly ObjectPool<Item> _foodPool;
 

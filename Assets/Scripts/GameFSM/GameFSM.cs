@@ -11,6 +11,7 @@ namespace Hypercasual.GameFSM
         public IWindowManager WindowManager { get; }
         public PlayerAnimator Player { get; }
         public AssemblyLine.AssemblyLine AssemblyLine { get; }
+        public CameraAnimator CameraAnimator { get; }
 
 
         private readonly Dictionary<GameFlow, IGameState> _states;
@@ -19,8 +20,10 @@ namespace Hypercasual.GameFSM
 
         public GameFSM(IGameFactory gameFactory, IWindowManager windowManager, ILevelService levelService,
             PlayerAnimator player,
-            AssemblyLine.AssemblyLine assemblyLine)
+            AssemblyLine.AssemblyLine assemblyLine,
+            CameraAnimator cameraAnimator)
         {
+            CameraAnimator = cameraAnimator;
             LevelService = levelService;
             AssemblyLine = assemblyLine;
             Player = player;
