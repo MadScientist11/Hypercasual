@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Serialization;
 
-namespace Hypercasual
+namespace Hypercasual.Player
 {
     public interface IPickable
     {
@@ -14,7 +14,6 @@ namespace Hypercasual
     public class PlayerPickUpItem : MonoBehaviour
     {
         [SerializeField] private PlayerReachZone playerReachZone;
-
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private Transform _handIKTarget;
         [SerializeField] private Transform _hand;

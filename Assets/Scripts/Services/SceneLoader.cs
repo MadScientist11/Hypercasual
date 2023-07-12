@@ -6,8 +6,12 @@ namespace Hypercasual.Services
     {
         void LoadScene(string sceneName, System.Action onLoaded = null);
     }
-    public class SceneLoader
+    public class SceneLoader : ISceneLoader
     {
+        public void Initialize()
+        {
+        }
+
         public void LoadScene(string nextScene, System.Action onLoaded = null)
         {
             SceneManager.sceneLoaded += OnSceneLoaded;

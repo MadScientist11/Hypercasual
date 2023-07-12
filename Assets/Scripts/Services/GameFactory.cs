@@ -1,27 +1,46 @@
+using System;
+using System.Collections.Generic;
+using Hypercasual.UI;
 using UnityEngine;
 using UnityEngine.Pool;
+using VContainer;
+using VContainer.Unity;
+using Object = UnityEngine.Object;
 
-namespace Hypercasual
+namespace Hypercasual.Services
 {
     public interface  IGameFactory : IService
     {
         Item GetOrCreateFood(FoodType foodType, Vector3 position);
+        T CreateScreen<T>() where T : BaseScreen;
+        UiRoot GetOrCreateUIRoot();
     }
+
     public class GameFactory : IGameFactory
     {
+        private readonly IObjectResolver _instantiator;
+
+        
         private const string BananaPath = "Banana";
         private const string ApplePath = "Apple";
         private const string OrangePath = "Apple";
 
-
+        private const string UiRootPath = "MainCanvas";
+        private const string MainScreenPath = "MainScreen";
+        
+        private readonly Dictionary<Type, string> _screenPaths = new()
+        {
+            { typeof(MainScreen), MainScreenPath },
+        };
         private readonly ObjectPool<Item> _foodPool;
 
-        private readonly AssetProvider _assetProvider;
+        private readonly IAssetProvider _assetProvider;
         private FoodType _currentFoodType;
 
-        public GameFactory(AssetProvider assetProvider)
+        public GameFactory(IObjectResolver instantiator, IAssetProvider assetProvider)
         {
             _assetProvider = assetProvider;
+            _instantiator = instantiator;
             _foodPool = new ObjectPool<Item>(CreateFood, food => food.gameObject.SetActive(true),
                 food => food.gameObject.SetActive(false)
                 , food => GameObject.Destroy(food.gameObject), 
@@ -35,6 +54,7 @@ namespace Hypercasual
         }
 
         private GameObject _foodParent;
+        private UiRoot _uiRoot;
 
         private Item CreateFood()
         {
@@ -60,6 +80,43 @@ namespace Hypercasual
             pooledFood.transform.position = position;
             pooledFood.Initialize(_foodPool);
             return pooledFood;
+        }
+        
+        public UiRoot GetOrCreateUIRoot()
+        {
+            if (_uiRoot == null)
+                _uiRoot = InstancePrefab<UiRoot>(UiRootPath);
+            
+            return _uiRoot;
+        }
+        
+        public T CreateScreen<T>() where T : BaseScreen
+        {
+            return InstancePrefabInjected<T>(_screenPaths[typeof(T)], _uiRoot.transform);
+        }
+        
+        private T InstancePrefab<T>(string path) where T : MonoBehaviour
+        {
+            T asset = _assetProvider.LoadAsset<T>(path);
+            return Object.Instantiate(asset);
+        }
+
+        private T InstancePrefabInjected<T>(string path) where T : MonoBehaviour
+        {
+            T asset = _assetProvider.LoadAsset<T>(path);
+            asset.gameObject.SetActive(false);
+            T instance = _instantiator.Instantiate(asset);
+            instance.gameObject.SetActive(true);
+            return instance;
+        }
+
+        private T InstancePrefabInjected<T>(string path, Transform parent) where T : MonoBehaviour
+        {
+            T asset = _assetProvider.LoadAsset<T>(path);
+            asset.gameObject.SetActive(false);
+            T instance = _instantiator.Instantiate(asset, parent);
+            instance.gameObject.SetActive(true);
+            return instance;
         }
     }
 }

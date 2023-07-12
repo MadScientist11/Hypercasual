@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Hypercasual.Services;
 using UnityEngine;
@@ -17,8 +16,8 @@ namespace Hypercasual.EntryPoints
         [Inject]
         public void Construct(IReadOnlyList<IService> allServices, ISceneLoader sceneLoader)
         {
-            _sceneLoader = sceneLoader;
             _allServices = allServices;
+            _sceneLoader = sceneLoader;
         }
 
         private void Awake() => 

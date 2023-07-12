@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using Hypercasual;
+using Hypercasual.Services;
 using UnityEngine;
+using VContainer;
 
 namespace Hypercasual
 {
@@ -8,12 +10,17 @@ namespace Hypercasual
     {
         public Transform _spawnPoint;
 
-        private GameFactory _gameFactory;
+        private IGameFactory _gameFactory;
 
+
+        [Inject]
+        public void Construct(IGameFactory gameFactory )
+        {
+            _gameFactory = gameFactory;
+        }
 
         private void Start()
         {
-            _gameFactory = new GameFactory(new AssetProvider());
             StartCoroutine(StartAssemblyLine());
         }
 
@@ -29,7 +36,4 @@ namespace Hypercasual
             }
         }
     }
-
 }
-
-

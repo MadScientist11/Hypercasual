@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hypercasual
+namespace Hypercasual.Player
 {
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimator : MonoBehaviour

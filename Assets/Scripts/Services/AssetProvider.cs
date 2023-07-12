@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hypercasual
+namespace Hypercasual.Services
 {
     public interface IAssetProvider : IService
     {
