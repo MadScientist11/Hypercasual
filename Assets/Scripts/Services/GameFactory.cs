@@ -9,8 +9,9 @@ using Object = UnityEngine.Object;
 
 namespace Hypercasual.Services
 {
-    public interface  IGameFactory : IService
+    public interface IGameFactory : IService
     {
+        GameObject FoodParent { get; }
         Item GetOrCreateFood(FoodType foodType, Vector3 position);
         T CreateScreen<T>() where T : BaseScreen;
         UiRoot GetOrCreateUIRoot();
@@ -18,9 +19,11 @@ namespace Hypercasual.Services
 
     public class GameFactory : IGameFactory
     {
+        public GameObject FoodParent { get; private set; }
+        
         private readonly IObjectResolver _instantiator;
         private readonly IAssetProvider _assetProvider;
-        
+
         private const string BananaPath = "Banana";
         private const string ApplePath = "Apple";
         private const string OrangePath = "Apple";
@@ -29,17 +32,17 @@ namespace Hypercasual.Services
         private const string MainScreenPath = "MainScreen";
         private const string LevelUIPath = "LevelUI";
         private const string WinScreenPath = "WinScreen";
-        
+
         private readonly Dictionary<Type, string> _screenPaths = new()
         {
             { typeof(MainScreen), MainScreenPath },
             { typeof(LevelUI), LevelUIPath },
             { typeof(WinScreen), WinScreenPath },
         };
+
         private readonly ObjectPool<Item> _foodPool;
 
         private FoodType _currentFoodType;
-        private GameObject _foodParent;
         private UiRoot _uiRoot;
 
         public GameFactory(IObjectResolver instantiator, IAssetProvider assetProvider)
@@ -48,9 +51,9 @@ namespace Hypercasual.Services
             _instantiator = instantiator;
             _foodPool = new ObjectPool<Item>(CreateFood, food => food.gameObject.SetActive(true),
                 food => food.gameObject.SetActive(false)
-                , food => GameObject.Destroy(food.gameObject), 
-                true, 
-                10, 
+                , food => GameObject.Destroy(food.gameObject),
+                true,
+                10,
                 15);
         }
 
@@ -61,7 +64,7 @@ namespace Hypercasual.Services
 
         private Item CreateFood()
         {
-            _foodParent ??= new GameObject("Foods");
+            FoodParent ??= new GameObject("Foods");
             string prefabPath = _currentFoodType switch
             {
                 FoodType.Apple => ApplePath,
@@ -71,7 +74,7 @@ namespace Hypercasual.Services
             };
 
             Item itemAsset = _assetProvider.LoadAsset<Item>(prefabPath);
-            Item instance = GameObject.Instantiate(itemAsset, _foodParent.transform);
+            Item instance = GameObject.Instantiate(itemAsset, FoodParent.transform);
             return instance;
         }
 
@@ -81,23 +84,27 @@ namespace Hypercasual.Services
             _currentFoodType = foodType;
             _foodPool.Get(out Item pooledFood);
             pooledFood.transform.position = position;
-            pooledFood.Initialize(_foodPool);
+            pooledFood.Initialize(_foodPool, this);
             return pooledFood;
         }
-        
+
+        public void CreateMiniFood()
+        {
+        }
+
         public UiRoot GetOrCreateUIRoot()
         {
             if (_uiRoot == null)
                 _uiRoot = InstancePrefab<UiRoot>(UiRootPath);
-            
+
             return _uiRoot;
         }
-        
+
         public T CreateScreen<T>() where T : BaseScreen
         {
             return InstancePrefabInjected<T>(_screenPaths[typeof(T)], _uiRoot.transform);
         }
-        
+
         private T InstancePrefab<T>(string path) where T : MonoBehaviour
         {
             T asset = _assetProvider.LoadAsset<T>(path);

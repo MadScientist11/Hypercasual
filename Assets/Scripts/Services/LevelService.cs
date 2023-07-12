@@ -40,6 +40,7 @@ namespace Hypercasual.Services
                 Food = levelData.Food,
                 FoodCount = levelData.FoodCount
             };
+            _currentLevelIndex++;
         }
 
         public void CheckFood(Item food)

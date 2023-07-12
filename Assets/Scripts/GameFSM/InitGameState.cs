@@ -11,8 +11,17 @@ namespace Hypercasual.GameFSM
 
         public void Enter()
         {
-            //Analytics
             _context.Player.ResetAnimatorState();
+            _context.CameraAnimator.SwitchToDefaultCamera();
+            _context.AssemblyLine.Activate();
+            
+            if (_context.HeadToNextLevel)
+            {
+                _context.SwitchState(GameFlow.StartLevel);
+                _context.HeadToNextLevel = false;
+                return;
+            }
+
             _context.SwitchState(GameFlow.MainScreenState);
         }
 

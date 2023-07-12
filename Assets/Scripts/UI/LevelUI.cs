@@ -20,6 +20,7 @@ namespace Hypercasual.UI
         private void OnEnable()
         {
             _objectiveText.text = $"Collect {_levelService.CurrentLevel.FoodCount} {_levelService.CurrentLevel.Food}s";
+            UpdateCount();
             _levelService.LevelStatusChanged += OnLevelStatusChanged;
         }
 
@@ -30,7 +31,12 @@ namespace Hypercasual.UI
 
         private void OnLevelStatusChanged(LevelInfo levelStatus)
         {
-            _foodCountText.text = $"Remaining Count: {levelStatus.FoodCount}";
+            UpdateCount();
+        }
+
+        private void UpdateCount()
+        {
+            _foodCountText.text = $"Remaining Count: {_levelService.CurrentLevel.FoodCount}";
         }
     }
 }

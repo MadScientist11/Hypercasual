@@ -13,6 +13,8 @@ namespace Hypercasual.GameFSM
         public AssemblyLine.AssemblyLine AssemblyLine { get; }
         public CameraAnimator CameraAnimator { get; }
 
+        public bool HeadToNextLevel { get;  set; }
+
 
         private readonly Dictionary<GameFlow, IGameState> _states;
         private IGameState _currentState;

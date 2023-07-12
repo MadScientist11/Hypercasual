@@ -5,7 +5,7 @@ namespace Hypercasual.GameFSM
 {
     public class CompleteLevelState : IGameState
     {
-        private GameFSM _context;
+        private readonly GameFSM _context;
 
         public CompleteLevelState(GameFSM context)
         {
@@ -15,9 +15,16 @@ namespace Hypercasual.GameFSM
         public void Enter()
         {
             _context.CameraAnimator.SwitchToWinCamera();
-            _context.AssemblyLine.gameObject.SetActive(false);
-            _context.WindowManager.OpenScreen<WinScreen>();
+            _context.AssemblyLine.Deactivate();
+            WinScreen winScreen = _context.WindowManager.OpenScreen<WinScreen>();
+            winScreen.Initialize(LoadNextLevel);
             _context.Player.PlayWinAnimation();
+        }
+
+        private void LoadNextLevel()
+        {
+            _context.HeadToNextLevel = true;
+            _context.SwitchState(GameFlow.InitGame);
         }
 
         public void Exit()

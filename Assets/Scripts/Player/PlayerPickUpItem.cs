@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Hypercasual.Services;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -21,44 +22,16 @@ namespace Hypercasual.Player
         [SerializeField] private Transform _hand;
         [SerializeField] private LayerMask _itemMask;
         [SerializeField] private Transform _fallInBasketPoint;
-        public event Action OnItemGrabbed;
-        
-        private Item _currentItem;
+
+        private Item _currentFood;
         private ILevelService _levelService;
+        private IGameFactory _gameFactory;
 
         [Inject]
-        public void Construct(ILevelService levelService)
+        public void Construct(IGameFactory gameFactory, ILevelService levelService)
         {
+            _gameFactory = gameFactory;
             _levelService = levelService;
-        }
-
-        private void GrabItem(Item item)
-        {
-            if (item.IsProcessed) return;
-            SetIK(item);
-            Debug.Log("GRab Item");
-            item.IsProcessed = true;
-            item.transform.SetParent(_hand);
-            item.transform.localPosition = Vector3.zero;
-            _currentItem = item;
-            _playerAnimator.PlayGrabItemAnimation();
-        }
-
-        private void AnimationEventCallback_OnItemPlacedInBasket()
-        {
-            Debug.Log("EndANim");
-            PlaceItemInBasket();
-        }
-
-        private void PlaceItemInBasket()
-        {
-            Transform itemTransform = _currentItem.transform;
-            itemTransform.SetParent(null);
-            itemTransform.position = _fallInBasketPoint.position;
-            itemTransform.localScale = Vector3.one * 0.1f;
-            itemTransform.GetComponent<Rigidbody>().isKinematic = false;
-            _levelService.CheckFood(_currentItem);
-            _currentItem = null;
         }
 
         private void Update()
@@ -79,6 +52,36 @@ namespace Hypercasual.Player
                 }
             }
         }
+
+        private void GrabItem(Item food)
+        {
+            if (food.IsProcessed) return;
+            food.SwitchState(FoodState.InThePlayerHand);
+
+            SetIK(food);
+            Debug.Log("GRab Item");
+            food.IsProcessed = true;
+            food.transform.SetParent(_hand);
+            food.transform.localPosition = Vector3.zero;
+            _currentFood = food;
+            _playerAnimator.PlayGrabItemAnimation();
+        }
+
+        [UsedImplicitly]
+        private void AnimationEventCallback_OnItemPlacedInBasket()
+        {
+            Debug.Log("EndANim");
+            PlaceItemInBasket();
+        }
+
+        private void PlaceItemInBasket()
+        {
+            _currentFood.CachedTransform.position = _fallInBasketPoint.position;
+            _currentFood.SwitchState(FoodState.FallInBasket);
+            _levelService.CheckFood(_currentFood);
+            _currentFood = null;
+        }
+
 
         private IEnumerator TryReachItem(Item item)
         {

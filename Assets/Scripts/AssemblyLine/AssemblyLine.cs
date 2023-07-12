@@ -53,7 +53,37 @@ namespace Hypercasual.AssemblyLine
             }
         }
 
+        public void Activate() => this.gameObject.SetActive(true);
+
+        public void Deactivate()
+        {
+            ClearAssemblyLine();
+            gameObject.SetActive(false);
+        }
+
         public void RestartAssemblyLine()
+        {
+            ClearAssemblyLine();
+
+            if (_assemblyLineCoroutine != null)
+                StopCoroutine(_assemblyLineCoroutine);
+
+            _assemblyLineCoroutine = StartCoroutine(StartAssemblyLine());
+        }
+
+        private IEnumerator StartAssemblyLine()
+        {
+            WaitForSeconds assemblySpawnWait = new WaitForSeconds(_assemblyLineConfig.FoodSpawnFrequency);
+            while (true)
+            {
+                Item food = SpawnFood();
+                food.SwitchState(FoodState.OnTheAssemblyLine);
+                _foodOnTheLine.Add(food);
+                yield return assemblySpawnWait;
+            }
+        }
+
+        private void ClearAssemblyLine()
         {
             foreach (Item food in _foodOnTheLine)
             {
@@ -62,11 +92,6 @@ namespace Hypercasual.AssemblyLine
 
             _foodToPool.Clear();
             _foodOnTheLine.Clear();
-
-            if (_assemblyLineCoroutine != null)
-                StopCoroutine(_assemblyLineCoroutine);
-            
-            _assemblyLineCoroutine = StartCoroutine(StartAssemblyLine());
         }
 
         private void ReturnToPool(Item food) =>
@@ -76,17 +101,6 @@ namespace Hypercasual.AssemblyLine
         {
             if (!food.IsProcessed)
                 food.CachedTransform.Translate(Time.deltaTime * _assemblyLineConfig.AssemblyLineSpeed * Vector3.right);
-        }
-
-        private IEnumerator StartAssemblyLine()
-        {
-            WaitForSeconds assemblySpawnWait = new WaitForSeconds(_assemblyLineConfig.FoodSpawnFrequency);
-            while (true)
-            {
-                Item food = SpawnFood();
-                _foodOnTheLine.Add(food);
-                yield return assemblySpawnWait;
-            }
         }
 
         private Item SpawnFood()

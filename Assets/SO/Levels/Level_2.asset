@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b1a56d235ac4eecb75bcffbe980e78c, type: 3}
   m_Name: Level_2
   m_EditorClassIdentifier: 
-  Food: 0
-  FoodCount: 5
+  Food: 2
+  FoodCount: 3
