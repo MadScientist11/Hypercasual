@@ -1,5 +1,4 @@
 using Hypercasual.GameFSM;
-using Hypercasual.Services;
 using UnityEngine;
 using VContainer;
 
@@ -15,14 +14,7 @@ namespace Hypercasual.EntryPoints
             _gameFsm = gameFsm;
         }
         
-        private void Awake()
-        {
+        private void Awake() => 
             _gameFsm.SwitchState(GameFlow.InitGame);
-        }
-
-        public void Restart()
-        {
-        
-        }
     }
 }

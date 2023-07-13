@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Hypercasual.GameFSM
+﻿namespace Hypercasual.GameFSM
 {
     public enum GameFlow
     {

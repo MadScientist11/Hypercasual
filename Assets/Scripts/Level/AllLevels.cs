@@ -18,6 +18,7 @@ public class AllLevels : ScriptableObject, IEnumerable<Level>, IData
                 Level level = ScriptableObject.CreateInstance<Level>();
                 level.Food = EnumExtensions<FoodType>.Random;
                 level.FoodCount = Random.Range(1, 6);
+                return level;
             }
 
             return _levelList[index];

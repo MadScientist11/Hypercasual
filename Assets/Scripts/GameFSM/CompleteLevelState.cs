@@ -19,6 +19,7 @@ namespace Hypercasual.GameFSM
             WinScreen winScreen = _context.WindowManager.OpenScreen<WinScreen>();
             winScreen.Initialize(LoadNextLevel, ToMenu);
             _context.Player.PlayWinAnimation();
+            _context.Confetti.gameObject.SetActive(true);
         }
 
         public void Exit()

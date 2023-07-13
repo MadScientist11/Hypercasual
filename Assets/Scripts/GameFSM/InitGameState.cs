@@ -13,6 +13,7 @@ namespace Hypercasual.GameFSM
         {
             _context.Player.ResetAnimatorState();
             _context.CameraAnimator.SwitchToDefaultCamera();
+            _context.Confetti.gameObject.SetActive(false);
             
             if (_context.HeadToNextLevel)
             {

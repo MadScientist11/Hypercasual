@@ -13,6 +13,7 @@ namespace Hypercasual.GameFSM
         public PlayerAnimator Player { get; }
         public AssemblyLine.AssemblyLine AssemblyLine { get; }
         public CameraAnimator CameraAnimator { get; }
+        public Confetti Confetti { get; }
 
         public bool HeadToNextLevel { get;  set; }
 
@@ -24,8 +25,10 @@ namespace Hypercasual.GameFSM
         public GameFSM(IGameFactory gameFactory, IWindowManager windowManager, ILevelService levelService,
             PlayerAnimator player,
             AssemblyLine.AssemblyLine assemblyLine,
-            CameraAnimator cameraAnimator)
+            CameraAnimator cameraAnimator,
+            Confetti confetti)
         {
+            Confetti = confetti;
             CameraAnimator = cameraAnimator;
             LevelService = levelService;
             AssemblyLine = assemblyLine;

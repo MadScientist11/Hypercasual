@@ -1,11 +1,7 @@
-using System;
 using System.Collections;
 using Hypercasual.Services;
 using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
-using UnityEngine.Serialization;
 using VContainer;
 
 namespace Hypercasual.Player

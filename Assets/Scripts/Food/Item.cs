@@ -2,7 +2,6 @@ using System;
 using Hypercasual.Player;
 using Hypercasual.Services;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace Hypercasual
 {

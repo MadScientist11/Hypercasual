@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Hypercasual.Services;
 using UnityEngine;
 using VContainer;
-using Random = UnityEngine.Random;
 
 namespace Hypercasual.AssemblyLine
 {
