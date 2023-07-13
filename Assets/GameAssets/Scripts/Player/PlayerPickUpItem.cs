@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using DG.Tweening;
 using Hypercasual.Food;
 using Hypercasual.Services;
 using JetBrains.Annotations;
@@ -11,7 +13,7 @@ namespace Hypercasual.Player
     {
         [SerializeField] private PlayerReachZone playerReachZone;
         [SerializeField] private PlayerAnimator _playerAnimator;
-        [SerializeField] private Transform _handIKTarget;
+        [SerializeField] private Transform[] _handIKTargets;
         [SerializeField] private Transform _hand;
         [SerializeField] private Transform _fallInBasketPoint;
 
@@ -19,11 +21,17 @@ namespace Hypercasual.Player
         private ILevelService _levelService;
         private IGameFactory _gameFactory;
 
+        private Quaternion _initialSpineRotation;
+
         [Inject]
         public void Construct(IGameFactory gameFactory, ILevelService levelService)
         {
             _gameFactory = gameFactory;
             _levelService = levelService;
+        }
+
+        private void Start()
+        {
         }
 
         private void Update()
@@ -52,11 +60,11 @@ namespace Hypercasual.Player
 
             SetIK(food);
 
-            Debug.Log("GRab Item");
-
-            food.transform.SetParent(_hand);
-            food.transform.localPosition = Vector3.zero;
-
+            //Debug.Log("GRab Item");
+//
+            //food.transform.SetParent(_hand);
+            //food.transform.localPosition = Vector3.zero;
+//
             _currentFood = food;
             _playerAnimator.PlayGrabItemAnimation();
         }
@@ -97,7 +105,10 @@ namespace Hypercasual.Player
 
         private void SetIK(FoodView item)
         {
-            _handIKTarget.position = item.transform.position;
+            foreach (Transform handIKTarget in _handIKTargets)
+            {
+                handIKTarget.position = item.transform.position;
+            }
         }
     }
 }
