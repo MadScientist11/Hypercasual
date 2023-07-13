@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 325366152}
   - component: {fileID: 325366151}
   m_Layer: 0
-  m_Name: GameScope
+  m_Name: GlobalScope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

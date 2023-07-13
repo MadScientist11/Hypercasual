@@ -19,36 +19,38 @@ namespace Hypercasual.Player
 
         private FoodView _currentFood;
         private ILevelService _levelService;
-        private IGameFactory _gameFactory;
+        private IInputService _inputService;
 
-        private Quaternion _initialSpineRotation;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, ILevelService levelService)
+        public void Construct(ILevelService levelService, IInputService inputService)
         {
-            _gameFactory = gameFactory;
+            _inputService = inputService;
             _levelService = levelService;
         }
 
         private void Start()
         {
+            _inputService.OnLeftMouseButtonClicked += TryGrabItem;
         }
 
-        private void Update()
+        private void OnDestroy()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            _inputService.OnLeftMouseButtonClicked -= TryGrabItem;
+        }
 
-                if (Physics.Raycast(ray, out hit, 100))
+        private void TryGrabItem()
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(_inputService.MousePosition);
+
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                Transform objectHit = hit.transform;
+                if (objectHit.TryGetComponent<FoodView>(out var food))
                 {
-                    Transform objectHit = hit.transform;
-                    if (objectHit.TryGetComponent<FoodView>(out var food))
-                    {
-                        if (playerReachZone.Contains(food.transform.position))
-                            GrabItem(food);
-                    }
+                    if (playerReachZone.Contains(food.transform.position))
+                        GrabItem(food);
                 }
             }
         }

@@ -796,7 +796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: Hypercasual.Scopes.MainLifetimeScope
+    TypeName: Hypercasual.Scopes.GlobalLifetimeScope
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1365869386}

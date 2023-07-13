@@ -23,7 +23,7 @@ namespace Hypercasual.Player
             return _reachZone.Contains(point);
         }
 
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
             Gizmos.DrawWireCube(_center.position, _scale);
         }
