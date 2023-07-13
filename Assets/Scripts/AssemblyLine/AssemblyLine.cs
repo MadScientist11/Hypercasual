@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Hypercasual.Services;
 using UnityEngine;
 using VContainer;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 namespace Hypercasual.AssemblyLine
 {
@@ -125,19 +125,10 @@ namespace Hypercasual.AssemblyLine
 
         private Item SpawnFood()
         {
-            Item food = _gameFactory.GetOrCreateFood(RandomFood(), _spawnPoint.position);
+            Item food = _gameFactory.GetOrCreateFood(EnumExtensions<FoodType>.Random, _spawnPoint.position);
             float yExtent = food.GetComponent<Collider>().bounds.extents.y;
             food.transform.position += new Vector3(0, yExtent, 0);
             return food;
-        }
-
-        private FoodType RandomFood()
-        {
-            Array values = Enum.GetValues(typeof(FoodType));
-            Random random = new Random();
-            int randomValue = random.Next(values.Length);
-            Debug.Log(randomValue);
-            return (FoodType)values.GetValue(randomValue);
         }
     }
 }

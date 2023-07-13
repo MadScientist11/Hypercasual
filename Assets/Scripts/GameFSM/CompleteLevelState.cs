@@ -1,6 +1,5 @@
 using Hypercasual.AssemblyLine;
 using Hypercasual.UI;
-using UnityEngine;
 
 namespace Hypercasual.GameFSM
 {
@@ -18,8 +17,12 @@ namespace Hypercasual.GameFSM
             _context.CameraAnimator.SwitchToWinCamera();
             _context.AssemblyLine.SwitchState(AssemblyLineState.LevelCompleted);
             WinScreen winScreen = _context.WindowManager.OpenScreen<WinScreen>();
-            winScreen.Initialize(LoadNextLevel);
+            winScreen.Initialize(LoadNextLevel, ToMenu);
             _context.Player.PlayWinAnimation();
+        }
+
+        public void Exit()
+        {
         }
 
         private void LoadNextLevel()
@@ -28,8 +31,10 @@ namespace Hypercasual.GameFSM
             _context.SwitchState(GameFlow.InitGame);
         }
 
-        public void Exit()
+        private void ToMenu()
         {
+            _context.HeadToNextLevel = false;
+            _context.SwitchState(GameFlow.InitGame);
         }
     }
 }

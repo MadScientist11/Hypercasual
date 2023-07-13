@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Hypercasual.Player;
 using Hypercasual.Services;
+using UnityEngine;
 
 namespace Hypercasual.GameFSM
 {
@@ -40,10 +41,16 @@ namespace Hypercasual.GameFSM
             WindowManager = windowManager;
         }
 
-        public void SwitchState(GameFlow gameFlow)
+        public void SwitchState(GameFlow nextState)
         {
+            if (_states[nextState] == _currentState)
+            {
+                Debug.LogWarning($"State {nextState} is already active");
+                return;
+            }
+            
             _currentState?.Exit();
-            _currentState = _states[gameFlow];
+            _currentState = _states[nextState];
             _currentState.Enter();
         }
     }

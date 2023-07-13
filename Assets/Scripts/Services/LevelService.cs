@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Hypercasual.Services
 {
@@ -34,6 +35,8 @@ namespace Hypercasual.Services
         public void LoadNextLevel()
         {
             AllLevels allLevels = _dataProvider.GetData<AllLevels>();
+            
+            Debug.Log(_currentLevelIndex);
             Level levelData = allLevels[_currentLevelIndex];
             CurrentLevel = new LevelInfo()
             {
