@@ -35,7 +35,6 @@ namespace Hypercasual.Player
             StartCoroutine(FoodCounterAnimation());
         }
 
-
         private IEnumerator FoodCounterAnimation()
         {
             ResetFoodCounterText();
@@ -48,9 +47,7 @@ namespace Hypercasual.Player
 
         private void ResetFoodCounterText()
         {
-            Color color = _foodCounterText.color;
-            color.a = 1;
-            _foodCounterText.color = color;
+            _foodCounterText.ChangeAlpha(1);
             _foodCounterText.transform.position = _foodCounterInitialPosition;
         }
     }
