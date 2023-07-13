@@ -20,7 +20,6 @@ namespace Hypercasual.Player
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private Transform _handIKTarget;
         [SerializeField] private Transform _hand;
-        [SerializeField] private LayerMask _itemMask;
         [SerializeField] private Transform _fallInBasketPoint;
 
         private Item _currentFood;
@@ -41,7 +40,7 @@ namespace Hypercasual.Player
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                if (Physics.Raycast(ray, out hit, 100, _itemMask))
+                if (Physics.Raycast(ray, out hit, 100))
                 {
                     Transform objectHit = hit.transform;
                     if (objectHit.TryGetComponent<Item>(out var item))
@@ -59,10 +58,12 @@ namespace Hypercasual.Player
             food.SwitchState(FoodState.InThePlayerHand);
 
             SetIK(food);
+
             Debug.Log("GRab Item");
-            food.IsProcessed = true;
+
             food.transform.SetParent(_hand);
             food.transform.localPosition = Vector3.zero;
+
             _currentFood = food;
             _playerAnimator.PlayGrabItemAnimation();
         }

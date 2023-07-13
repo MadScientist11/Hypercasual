@@ -1,3 +1,4 @@
+using Hypercasual.AssemblyLine;
 using Hypercasual.UI;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace Hypercasual.GameFSM
         public void Enter()
         {
             _context.CameraAnimator.SwitchToWinCamera();
-            _context.AssemblyLine.Deactivate();
+            _context.AssemblyLine.SwitchState(AssemblyLineState.LevelCompleted);
             WinScreen winScreen = _context.WindowManager.OpenScreen<WinScreen>();
             winScreen.Initialize(LoadNextLevel);
             _context.Player.PlayWinAnimation();

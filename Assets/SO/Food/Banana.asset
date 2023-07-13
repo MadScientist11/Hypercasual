@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49b8a1d263354eff92cd14cebe9d626a, type: 3}
-  m_Name: Orange
+  m_Name: Banana
   m_EditorClassIdentifier: 
-  Type: 2
-  Prefab: {fileID: 970732716554392290, guid: 123ca6673ae6ff8418fdc5bf2c41fa00, type: 3}
+  Type: 1
+  Prefab: {fileID: 4726938260303829645, guid: 41cbfe057137b82468c377d0f2ec75cd, type: 3}

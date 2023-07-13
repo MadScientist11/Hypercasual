@@ -1,3 +1,4 @@
+using Hypercasual.AssemblyLine;
 using Hypercasual.Player;
 using Hypercasual.UI;
 
@@ -22,6 +23,7 @@ namespace Hypercasual.GameFSM
         private void OpenMainMenuScreen()
         {
             _context.GameFactory.GetOrCreateUIRoot();
+            _context.AssemblyLine.SwitchState(AssemblyLineState.MainMenu);
             _mainScreen = _context.WindowManager.OpenScreen<MainScreen>();
             _mainScreen.Initialize(() => _context.SwitchState(GameFlow.StartLevel));
         }

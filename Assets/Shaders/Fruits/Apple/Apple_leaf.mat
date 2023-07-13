@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3630863661041095494
+--- !u!114 &-5471072422354311682
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerMaterial
+  m_Name: Apple_leaf
   m_Shader: {fileID: -6465566751694194690, guid: 6d9084a484ef249479d5112f57e6b291,
     type: 3}
   m_ValidKeywords: []
@@ -35,7 +35,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: e2c7532ed5492a84f8db0b0ecb477d96, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -54,17 +54,17 @@ Material:
     m_Floats:
     - ONESTEPSHADOWS: 0
     - _BENDAY: 0
-    - _BacklightRim: 1.09
-    - _EdgeSmoothness: 0.08
-    - _Offset: 1.13
+    - _BacklightRim: 1.3
+    - _EdgeSmoothness: 0
+    - _Offset: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RimIntensity: 2.5
-    - _ShadingMultiplier: 0.27
-    - _Smoothness: 0.456
+    - _RimIntensity: 4
+    - _ShadingMultiplier: 0
+    - _Smoothness: 0
     m_Colors:
-    - _MainColor: {r: 0.95294124, g: 0.8588236, b: 0.49803925, a: 0}
-    - _ShadowColor: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 0}
-    - _Specular: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 0}
-    - _Tint: {r: 0.9725491, g: 0.9333334, b: 0.79215693, a: 0}
+    - _MainColor: {r: 0.2014254, g: 0.990566, b: 0, a: 0}
+    - _ShadowColor: {r: 0, g: 0, b: 0, a: 0}
+    - _Specular: {r: 0, g: 0, b: 0, a: 0}
+    - _Tint: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

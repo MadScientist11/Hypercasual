@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Freya;
-using Hypercasual;
-using Hypercasual.Player;
 using Hypercasual.Services;
 using UnityEngine;
 using VContainer;
+using Random = System.Random;
 
 namespace Hypercasual.AssemblyLine
 {
+    public enum AssemblyLineState
+    {
+        MainMenu = 0,
+        GameStart = 1,
+        LevelCompleted = 2,
+    }
+
     public class AssemblyLine : MonoBehaviour
     {
         [SerializeField] private Transform _spawnPoint;
@@ -28,40 +33,62 @@ namespace Hypercasual.AssemblyLine
             _gameFactory = gameFactory;
         }
 
-        private void Start()
+        private void Awake()
         {
             _foodOnTheLine = new HashSet<Item>();
             _foodToPool = new HashSet<Item>();
-            RestartAssemblyLine();
         }
 
         private void Update()
         {
-            _foodToPool.Clear();
             foreach (Item food in _foodOnTheLine)
             {
-                if (_assemblyLineEnd.Contains(food.CachedTransform.position))
-                    _foodToPool.Add(food);
-
                 MoveThroughAssemblyLine(food);
+            }
+
+            ReturnToPool(food => _assemblyLineEnd.Contains(food.CachedTransform.position));
+        }
+
+        private void ReturnToPool(Func<Item, bool> predicate)
+        {
+            foreach (Item food in _foodOnTheLine)
+            {
+                if (predicate.Invoke(food))
+                    _foodToPool.Add(food);
             }
 
             foreach (Item food in _foodToPool)
             {
-                ReturnToPool(food);
+                food.Hide();
                 _foodOnTheLine.Remove(food);
+            }
+
+            _foodToPool.Clear();
+        }
+
+        public void SwitchState(AssemblyLineState state)
+        {
+            switch (state)
+            {
+                case AssemblyLineState.MainMenu:
+                    Activate();
+                    RestartAssemblyLine();
+                    break;
+                case AssemblyLineState.GameStart:
+                    RestartAssemblyLine();
+                    break;
+                case AssemblyLineState.LevelCompleted:
+                    ReturnToPool(food => !food.IsProcessed);
+                    Deactivate();
+                    break;
             }
         }
 
-        public void Activate() => this.gameObject.SetActive(true);
+        private void Activate() => gameObject.SetActive(true);
 
-        public void Deactivate()
-        {
-            ClearAssemblyLine();
-            gameObject.SetActive(false);
-        }
+        private void Deactivate() => gameObject.SetActive(false);
 
-        public void RestartAssemblyLine()
+        private void RestartAssemblyLine()
         {
             ClearAssemblyLine();
 
@@ -85,17 +112,10 @@ namespace Hypercasual.AssemblyLine
 
         private void ClearAssemblyLine()
         {
-            foreach (Item food in _foodOnTheLine)
-            {
-                ReturnToPool(food);
-            }
-
+            ReturnToPool(_ => true);
             _foodToPool.Clear();
             _foodOnTheLine.Clear();
         }
-
-        private void ReturnToPool(Item food) =>
-            food.Hide();
 
         private void MoveThroughAssemblyLine(Item food)
         {
@@ -105,10 +125,19 @@ namespace Hypercasual.AssemblyLine
 
         private Item SpawnFood()
         {
-            Item food = _gameFactory.GetOrCreateFood(FoodType.Apple, _spawnPoint.position);
+            Item food = _gameFactory.GetOrCreateFood(RandomFood(), _spawnPoint.position);
             float yExtent = food.GetComponent<Collider>().bounds.extents.y;
             food.transform.position += new Vector3(0, yExtent, 0);
             return food;
+        }
+
+        private FoodType RandomFood()
+        {
+            Array values = Enum.GetValues(typeof(FoodType));
+            Random random = new Random();
+            int randomValue = random.Next(values.Length);
+            Debug.Log(randomValue);
+            return (FoodType)values.GetValue(randomValue);
         }
     }
 }

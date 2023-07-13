@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3630863661041095494
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 5
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerMaterial
+  m_Name: Apple
   m_Shader: {fileID: -6465566751694194690, guid: 6d9084a484ef249479d5112f57e6b291,
     type: 3}
   m_ValidKeywords: []
@@ -35,7 +22,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: e2c7532ed5492a84f8db0b0ecb477d96, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -54,17 +41,30 @@ Material:
     m_Floats:
     - ONESTEPSHADOWS: 0
     - _BENDAY: 0
-    - _BacklightRim: 1.09
-    - _EdgeSmoothness: 0.08
-    - _Offset: 1.13
+    - _BacklightRim: 0.34
+    - _EdgeSmoothness: 0.19
+    - _Offset: 1.15
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RimIntensity: 2.5
-    - _ShadingMultiplier: 0.27
-    - _Smoothness: 0.456
+    - _RimIntensity: 1.14
+    - _ShadingMultiplier: 0
+    - _Smoothness: 0.449
     m_Colors:
-    - _MainColor: {r: 0.95294124, g: 0.8588236, b: 0.49803925, a: 0}
-    - _ShadowColor: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 0}
-    - _Specular: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 0}
-    - _Tint: {r: 0.9725491, g: 0.9333334, b: 0.79215693, a: 0}
+    - _MainColor: {r: 0.8207547, g: 0.07355818, b: 0.07355818, a: 0}
+    - _ShadowColor: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 0}
+    - _Specular: {r: 0, g: 0, b: 0, a: 0}
+    - _Tint: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &1583249676083884807
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5

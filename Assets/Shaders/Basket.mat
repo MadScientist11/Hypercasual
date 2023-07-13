@@ -63,6 +63,7 @@ Material:
     - _ShadingMultiplier: 2.65
     - _Smoothness: 0.265
     m_Colors:
+    - _MainColor: {r: 0.9490197, g: 0.62352943, b: 0.015686275, a: 0}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 0}
     - _Specular: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 0}
     - _Tint: {r: 0, g: 0, b: 0, a: 0}

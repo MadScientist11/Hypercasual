@@ -1,3 +1,4 @@
+using Hypercasual.AssemblyLine;
 using Hypercasual.Player;
 using Hypercasual.UI;
 
@@ -17,7 +18,7 @@ namespace Hypercasual.GameFSM
             InitializeLevel();
             _context.WindowManager.OpenScreen<LevelUI>();
             EnablePlayerLogic();
-            _context.AssemblyLine.RestartAssemblyLine();
+            _context.AssemblyLine.SwitchState(AssemblyLineState.MainMenu);
         }
 
         public void Exit()
@@ -30,7 +31,7 @@ namespace Hypercasual.GameFSM
             _context.LevelService.LoadNextLevel();
             _context.LevelService.OnLevelCompleted += OnLevelCompleted;
         }
-        
+
         private void OnLevelCompleted()
         {
             _context.SwitchState(GameFlow.CompleteLevel);
