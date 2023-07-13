@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hypercasual.Food;
+using Hypercasual.Level;
 
 namespace Hypercasual.Services
 {

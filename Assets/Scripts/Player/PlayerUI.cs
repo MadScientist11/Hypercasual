@@ -1,5 +1,6 @@
 using System.Collections;
 using DG.Tweening;
+using Hypercasual.Level;
 using Hypercasual.Services;
 using TMPro;
 using UnityEngine;

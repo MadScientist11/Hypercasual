@@ -1,9 +1,12 @@
-using Hypercasual;
+using Hypercasual.Food;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/Level", fileName = "Level_")]
-public class Level : ScriptableObject
+namespace Hypercasual.Level
 {
-    public FoodType Food;
-    public int FoodCount;
+    [CreateAssetMenu(menuName = "Game/Level", fileName = "Level_")]
+    public class Level : ScriptableObject
+    {
+        public FoodType Food;
+        public int FoodCount;
+    }
 }

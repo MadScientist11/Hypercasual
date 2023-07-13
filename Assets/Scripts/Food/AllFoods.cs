@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Hypercasual.Services;
 using UnityEngine;
 
-namespace Hypercasual.Services
+namespace Hypercasual.Food
 {
     [CreateAssetMenu(menuName = "Game/AllFoods", fileName = "AllFoods")]
     public class AllFoods : ScriptableObject, IEnumerable<Food>, IData

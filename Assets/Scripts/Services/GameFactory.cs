@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Hypercasual.Food;
 using Hypercasual.UI;
 using UnityEngine;
 using VContainer;
@@ -11,7 +12,7 @@ namespace Hypercasual.Services
     public interface IGameFactory : IService
     {
         GameObject FoodParent { get; }
-        Item GetOrCreateFood(FoodType foodType, Vector3 position);
+        FoodView GetOrCreateFood(FoodType foodType, Vector3 position);
         T CreateScreen<T>() where T : BaseScreen;
         UiRoot GetOrCreateUIRoot();
     }
@@ -81,10 +82,7 @@ namespace Hypercasual.Services
 
         private readonly IObjectResolver _instantiator;
         private readonly IAssetProvider _assetProvider;
-
-        private const string BananaPath = "Banana";
-        private const string ApplePath = "Apple";
-        private const string OrangePath = "Apple";
+        private readonly IDataProvider _dataProvider;
 
         private const string UiRootPath = "MainCanvas";
         private const string MainScreenPath = "MainScreen";
@@ -98,18 +96,17 @@ namespace Hypercasual.Services
             { typeof(WinScreen), WinScreenPath },
         };
 
-        private readonly ObjectPoolM<Item> _foodPool;
+        private readonly ObjectPoolM<FoodView> _foodPool;
 
         private FoodType _currentFoodType;
         private UiRoot _uiRoot;
-        private IDataProvider _dataProvider;
 
         public GameFactory(IObjectResolver instantiator, IAssetProvider assetProvider, IDataProvider dataProvider)
         {
             _dataProvider = dataProvider;
             _assetProvider = assetProvider;
             _instantiator = instantiator;
-            _foodPool = new ObjectPoolM<Item>(CreateFood, food => food.gameObject.SetActive(false),
+            _foodPool = new ObjectPoolM<FoodView>(CreateFood, food => food.gameObject.SetActive(false),
                 food => food.gameObject.SetActive(true));
         }
 
@@ -118,19 +115,19 @@ namespace Hypercasual.Services
         }
 
 
-        private Item CreateFood()
+        private FoodView CreateFood()
         {
             FoodParent ??= new GameObject("Foods");
             GameObject itemPrefab = _dataProvider.GetData<AllFoods>().GetFood(_currentFoodType).Prefab;
-            Item instance = InstancePrefab<Item>(itemPrefab, FoodParent.transform);
+            FoodView instance = InstancePrefab<FoodView>(itemPrefab, FoodParent.transform);
             return instance;
         }
 
 
-        public Item GetOrCreateFood(FoodType foodType, Vector3 position)
+        public FoodView GetOrCreateFood(FoodType foodType, Vector3 position)
         {
             _currentFoodType = foodType;
-            Item pooledFood = _foodPool.Get(food => food.FoodType == foodType);
+            FoodView pooledFood = _foodPool.Get(food => food.FoodType == foodType);
             pooledFood.transform.position = position;
             pooledFood.Initialize(_foodPool, this);
             return pooledFood;

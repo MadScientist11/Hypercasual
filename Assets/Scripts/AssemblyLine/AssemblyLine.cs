@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Hypercasual.Food;
 using Hypercasual.Services;
 using UnityEngine;
 using VContainer;
 
 namespace Hypercasual.AssemblyLine
 {
-    public enum AssemblyLineState
-    {
-        MainMenu = 0,
-        GameStart = 1,
-        LevelCompleted = 2,
-    }
-
     public class AssemblyLine : MonoBehaviour
     {
         [SerializeField] private Transform _spawnPoint;
@@ -21,8 +15,8 @@ namespace Hypercasual.AssemblyLine
         [SerializeField] private AssemblyLineEnd _assemblyLineEnd;
 
         private IGameFactory _gameFactory;
-        private HashSet<Item> _foodOnTheLine;
-        private HashSet<Item> _foodToPool;
+        private HashSet<FoodView> _foodOnTheLine;
+        private HashSet<FoodView> _foodToPool;
 
         private Coroutine _assemblyLineCoroutine;
 
@@ -34,13 +28,13 @@ namespace Hypercasual.AssemblyLine
 
         private void Awake()
         {
-            _foodOnTheLine = new HashSet<Item>();
-            _foodToPool = new HashSet<Item>();
+            _foodOnTheLine = new HashSet<FoodView>();
+            _foodToPool = new HashSet<FoodView>();
         }
 
         private void Update()
         {
-            foreach (Item food in _foodOnTheLine)
+            foreach (FoodView food in _foodOnTheLine)
             {
                 MoveThroughAssemblyLine(food);
             }
@@ -48,15 +42,15 @@ namespace Hypercasual.AssemblyLine
             ReturnToPool(food => _assemblyLineEnd.Contains(food.CachedTransform.position));
         }
 
-        private void ReturnToPool(Func<Item, bool> predicate)
+        private void ReturnToPool(Func<FoodView, bool> predicate)
         {
-            foreach (Item food in _foodOnTheLine)
+            foreach (FoodView food in _foodOnTheLine)
             {
                 if (predicate.Invoke(food))
                     _foodToPool.Add(food);
             }
 
-            foreach (Item food in _foodToPool)
+            foreach (FoodView food in _foodToPool)
             {
                 food.Hide();
                 _foodOnTheLine.Remove(food);
@@ -102,7 +96,7 @@ namespace Hypercasual.AssemblyLine
             WaitForSeconds assemblySpawnWait = new WaitForSeconds(_assemblyLineConfig.FoodSpawnFrequency);
             while (true)
             {
-                Item food = SpawnFood();
+                FoodView food = SpawnFood();
                 food.SwitchState(FoodState.OnTheAssemblyLine);
                 _foodOnTheLine.Add(food);
                 yield return assemblySpawnWait;
@@ -116,15 +110,15 @@ namespace Hypercasual.AssemblyLine
             _foodOnTheLine.Clear();
         }
 
-        private void MoveThroughAssemblyLine(Item food)
+        private void MoveThroughAssemblyLine(FoodView food)
         {
             if (!food.IsProcessed)
                 food.CachedTransform.Translate(Time.deltaTime * _assemblyLineConfig.AssemblyLineSpeed * Vector3.right);
         }
 
-        private Item SpawnFood()
+        private FoodView SpawnFood()
         {
-            Item food = _gameFactory.GetOrCreateFood(EnumExtensions<FoodType>.Random, _spawnPoint.position);
+            FoodView food = _gameFactory.GetOrCreateFood(EnumExtensions<FoodType>.Random, _spawnPoint.position);
             float yExtent = food.GetComponent<Collider>().bounds.extents.y;
             food.transform.position += new Vector3(0, yExtent, 0);
             return food;

@@ -1,4 +1,4 @@
-namespace Hypercasual
+namespace Hypercasual.Food
 {
     public enum FoodType
     {

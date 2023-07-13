@@ -1,4 +1,6 @@
-namespace Hypercasual.Services
+using Hypercasual.Food;
+
+namespace Hypercasual.Level
 {
     public class LevelInfo
     {

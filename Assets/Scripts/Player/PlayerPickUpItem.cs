@@ -1,4 +1,5 @@
 using System.Collections;
+using Hypercasual.Food;
 using Hypercasual.Services;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -6,10 +7,6 @@ using VContainer;
 
 namespace Hypercasual.Player
 {
-    public interface IPickable
-    {
-    }
-
     public class PlayerPickUpItem : MonoBehaviour
     {
         [SerializeField] private PlayerReachZone playerReachZone;
@@ -18,7 +15,7 @@ namespace Hypercasual.Player
         [SerializeField] private Transform _hand;
         [SerializeField] private Transform _fallInBasketPoint;
 
-        private Item _currentFood;
+        private FoodView _currentFood;
         private ILevelService _levelService;
         private IGameFactory _gameFactory;
 
@@ -39,16 +36,16 @@ namespace Hypercasual.Player
                 if (Physics.Raycast(ray, out hit, 100))
                 {
                     Transform objectHit = hit.transform;
-                    if (objectHit.TryGetComponent<Item>(out var item))
+                    if (objectHit.TryGetComponent<FoodView>(out var food))
                     {
-                        if (playerReachZone.Contains(item.transform.position))
-                            GrabItem(item);
+                        if (playerReachZone.Contains(food.transform.position))
+                            GrabItem(food);
                     }
                 }
             }
         }
 
-        private void GrabItem(Item food)
+        private void GrabItem(FoodView food)
         {
             if (food.IsProcessed) return;
             food.SwitchState(FoodState.InThePlayerHand);
@@ -80,7 +77,7 @@ namespace Hypercasual.Player
         }
 
 
-        private IEnumerator TryReachItem(Item item)
+        private IEnumerator TryReachItem(FoodView item)
         {
             if (item.IsProcessed) yield break;
 
@@ -98,7 +95,7 @@ namespace Hypercasual.Player
             _playerAnimator.PlayGrabItemBackAnimation();
         }
 
-        private void SetIK(Item item)
+        private void SetIK(FoodView item)
         {
             _handIKTarget.position = item.transform.position;
         }

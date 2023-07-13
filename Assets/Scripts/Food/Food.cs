@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hypercasual.Services
+namespace Hypercasual.Food
 {
     [CreateAssetMenu(menuName = "Game/Food", fileName = "Food")]
     public class Food : ScriptableObject

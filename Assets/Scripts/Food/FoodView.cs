@@ -3,24 +3,17 @@ using Hypercasual.Player;
 using Hypercasual.Services;
 using UnityEngine;
 
-namespace Hypercasual
+namespace Hypercasual.Food
 {
-    public enum FoodState
-    {
-        OnTheAssemblyLine = 0,
-        InThePlayerHand = 1,
-        FallInBasket = 2,
-    }
-
     [RequireComponent(typeof(Rigidbody), typeof(Renderer))]
-    public class Item : MonoBehaviour, IPickable
+    public class FoodView : MonoBehaviour
     {
         public bool IsProcessed { get; set; } = false;
 
         public Transform CachedTransform { get; private set; }
 
         public FoodType FoodType;
-        private ObjectPoolM<Item> _objectPool;
+        private ObjectPoolM<FoodView> _objectPool;
 
         private readonly float _inHandScaleFactor = 0.6f;
         private IGameFactory _gameFactory;
@@ -28,7 +21,7 @@ namespace Hypercasual
         private Vector3 _initialSize;
         private Quaternion _initialRotation;
 
-        public void Initialize(ObjectPoolM<Item> objectPool, IGameFactory gameFactory)
+        public void Initialize(ObjectPoolM<FoodView> objectPool, IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
             _objectPool = objectPool;
