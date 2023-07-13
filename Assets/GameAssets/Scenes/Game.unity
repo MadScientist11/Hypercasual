@@ -1639,6 +1639,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6121071775764562920, guid: bfe061dcdecbc70419bca1c6c9e49491,
+        type: 3}
+      propertyPath: <SpawnPoint>k__BackingField
+      value: 
+      objectReference: {fileID: 6121071775575358362}
     - target: {fileID: 6121071775764562921, guid: bfe061dcdecbc70419bca1c6c9e49491,
         type: 3}
       propertyPath: m_Name
@@ -1701,6 +1706,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfe061dcdecbc70419bca1c6c9e49491, type: 3}
+--- !u!4 &6121071775575358362 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6121071774903254420, guid: bfe061dcdecbc70419bca1c6c9e49491,
+    type: 3}
+  m_PrefabInstance: {fileID: 6121071775575358361}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6183460126725212337
 PrefabInstance:
   m_ObjectHideFlags: 0

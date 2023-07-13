@@ -17,65 +17,6 @@ namespace Hypercasual.Services
         UiRoot GetOrCreateUIRoot();
     }
 
-    public class ObjectPoolM<T> where T : class
-    {
-        private List<T> _objects;
-        private Func<T> _create;
-        private Action<T> _onRelease;
-        private Action<T> _onGet;
-
-        public ObjectPoolM(Func<T> create, Action<T> onRelease, Action<T> onGet)
-        {
-            _onGet = onGet;
-            _onRelease = onRelease;
-            _create = create;
-            _objects = new List<T>();
-        }
-
-        public T Get(Func<T, bool> predicate)
-        {
-            T obj;
-            if (_objects.Count == 0)
-            {
-                obj = _create.Invoke();
-            }
-            else
-            {
-                T searchFor = SearchFor(predicate);
-                if (searchFor != null)
-                {
-                    obj = searchFor;
-                    _objects.Remove(searchFor);
-                }
-                else
-                {
-                    obj = _create.Invoke();
-                }
-            }
-
-            _onGet?.Invoke(obj);
-            return obj;
-        }
-
-        private T SearchFor(Func<T, bool> predicate)
-        {
-            foreach (T obj in _objects)
-            {
-                if (predicate.Invoke(obj))
-                    return obj;
-            }
-
-            return null;
-        }
-
-        public void Release(T item)
-        {
-            if (!_objects.Contains(item))
-                _objects.Add(item);
-            _onRelease?.Invoke(item);
-        }
-    }
-
     public class GameFactory : IGameFactory
     {
         public GameObject FoodParent { get; private set; }
@@ -157,16 +98,14 @@ namespace Hypercasual.Services
         {
             return Object.Instantiate(asset).GetComponent<T>();
         }
-
-        private T InstancePrefabInjected<T>(string path) where T : MonoBehaviour
+        
+        private T InstancePrefabInjected<T>(GameObject asset, Transform parent) where T : MonoBehaviour
         {
-            T asset = _assetProvider.LoadAsset<T>(path);
-            asset.gameObject.SetActive(false);
-            T instance = _instantiator.Instantiate(asset);
-            instance.gameObject.SetActive(true);
-            return instance;
+            GameObject gameObject = Object.Instantiate(asset, parent);
+            _instantiator.InjectGameObject(gameObject);
+            return gameObject.GetComponent<T>();
         }
-
+        
         private T InstancePrefabInjected<T>(string path, Transform parent) where T : MonoBehaviour
         {
             T asset = _assetProvider.LoadAsset<T>(path);
