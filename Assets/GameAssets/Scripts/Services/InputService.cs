@@ -14,7 +14,9 @@ namespace Hypercasual.Services
     public class InputService : IInputService, GameActions.IPlayerActions
     {
         public event Action OnLeftMouseButtonClicked;
-        public Vector3 MousePosition { get; private set; }
+
+        public Vector3 MousePosition => 
+            Application.isMobilePlatform ? Touchscreen.current.position.ReadValue() : Mouse.current.position.ReadValue();
 
         private GameActions _input;
 
@@ -38,7 +40,6 @@ namespace Hypercasual.Services
 
         public void OnMousePosition(InputAction.CallbackContext context)
         {
-            MousePosition = context.ReadValue<Vector2>();
         }
     }
 }

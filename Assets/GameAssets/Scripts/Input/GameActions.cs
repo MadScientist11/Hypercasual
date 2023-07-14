@@ -62,9 +62,9 @@ namespace Hypercasual.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7ba0f237-d8f5-4bef-8874-49dfbe64739d"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
-                    ""interactions"": """",
+                    ""id"": ""84f316f7-28e1-402d-8c27-f23ccd440f69"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Touch"",
                     ""action"": ""LeftClick"",
