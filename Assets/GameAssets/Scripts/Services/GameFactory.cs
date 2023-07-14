@@ -70,7 +70,7 @@ namespace Hypercasual.Services
             _currentFoodType = foodType;
             FoodView pooledFood = _foodPool.Get(food => food.FoodType == foodType);
             pooledFood.transform.position = position;
-            pooledFood.Initialize(_foodPool, this);
+            pooledFood.Initialize(_foodPool);
             return pooledFood;
         }
 

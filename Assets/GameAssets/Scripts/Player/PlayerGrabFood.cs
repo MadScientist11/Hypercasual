@@ -1,13 +1,12 @@
 using System.Collections;
 using Hypercasual.Food;
 using Hypercasual.Services;
-using JetBrains.Annotations;
 using UnityEngine;
 using VContainer;
 
 namespace Hypercasual.Player
 {
-    public class PlayerPickUpItem : MonoBehaviour
+    public class PlayerGrabFood : MonoBehaviour
     {
         [SerializeField] private PlayerReachZone playerReachZone;
         [SerializeField] private PlayerAnimator _playerAnimator;
@@ -19,6 +18,7 @@ namespace Hypercasual.Player
         private ILevelManager _levelManager;
         private IInputService _inputService;
 
+        private readonly float _inHandScaleFactor = 0.6f;
 
         [Inject]
         public void Construct(ILevelManager levelManager, IInputService inputService)
@@ -65,9 +65,8 @@ namespace Hypercasual.Player
 
         private void PlaceInTheHand(FoodView food)
         {
-            Debug.Log("Place in hand");
-            food.transform.SetParent(_hand);
-            food.transform.localPosition = Vector3.zero;
+            food.CachedTransform.SetParent(_hand);
+            food.CachedTransform.localPosition = Vector3.zero;
             StartCoroutine(PlaceItemInBasket());
         }
 
@@ -75,10 +74,15 @@ namespace Hypercasual.Player
         private IEnumerator PlaceItemInBasket()
         {
             yield return new WaitForSeconds(1.5f);
+            
+            _currentFood.ResetScaleAndRotation();
+            _currentFood.CachedTransform.localScale *= _inHandScaleFactor;
             _currentFood.CachedTransform.position = _fallInBasketPoint.position;
-            _currentFood.SwitchState(FoodState.FallInBasket);
-            _currentFood.transform.SetParent(null);
+            _currentFood.GetComponent<Rigidbody>().isKinematic = false;
+            _currentFood.CachedTransform.SetParent(null);
+            
             _levelManager.CheckFood(_currentFood);
+            
             _currentFood = null;
         }
 

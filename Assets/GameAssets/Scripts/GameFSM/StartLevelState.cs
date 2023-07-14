@@ -38,6 +38,6 @@ namespace Hypercasual.GameFSM
         }
 
         private void EnablePlayerLogic() =>
-            _context.Player.GetComponent<PlayerPickUpItem>().enabled = true;
+            _context.Player.GetComponent<PlayerGrabFood>().enabled = true;
     }
 }

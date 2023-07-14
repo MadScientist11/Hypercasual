@@ -12,7 +12,6 @@ namespace Hypercasual.Player
         private const string WinState = "Win";
         private const string IdleState = "Idle";
         private static readonly int GrabItem = Animator.StringToHash("GrabItem");
-        private static readonly int GrabItemBack = Animator.StringToHash("GrabItemBack");
         
         private Action _onGrabFoodCompleted;
 
