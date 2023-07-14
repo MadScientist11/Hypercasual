@@ -96,11 +96,21 @@ namespace Hypercasual.AssemblyLine
             WaitForSeconds assemblySpawnWait = new WaitForSeconds(_assemblyLineConfig.FoodSpawnFrequency);
             while (true)
             {
-                FoodView food = SpawnFood();
-                food.SwitchState(FoodState.OnTheAssemblyLine);
+                FoodView food = _gameFactory.GetOrCreateFood(EnumExtensions<FoodType>.Random, _spawnPoint.position);
+                PlaceOnTheAssemblyLine(food);
                 _foodOnTheLine.Add(food);
                 yield return assemblySpawnWait;
             }
+        }
+
+        private void PlaceOnTheAssemblyLine(FoodView food)
+        {
+            food.ResetScaleAndRotation();
+            float yExtent = food.GetComponent<Collider>().bounds.extents.y;
+            food.transform.position += new Vector3(0, yExtent, 0);
+            food.GetComponent<Rigidbody>().isKinematic = true;
+            food.IsProcessed = false;
+            //food.CachedTransform.SetParent(_gameFactory.FoodParent.transform);
         }
 
         private void ClearAssemblyLine()
@@ -119,8 +129,6 @@ namespace Hypercasual.AssemblyLine
         private FoodView SpawnFood()
         {
             FoodView food = _gameFactory.GetOrCreateFood(EnumExtensions<FoodType>.Random, _spawnPoint.position);
-            float yExtent = food.GetComponent<Collider>().bounds.extents.y;
-            food.transform.position += new Vector3(0, yExtent, 0);
             return food;
         }
     }

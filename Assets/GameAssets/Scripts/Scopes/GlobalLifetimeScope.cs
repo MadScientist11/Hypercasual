@@ -18,7 +18,7 @@ namespace Hypercasual.Scopes
             builder.Register<SceneLoader>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<WindowManager>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<DataProvider>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<LevelService>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<LevelManager>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<InputService>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }

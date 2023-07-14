@@ -730,7 +730,7 @@ GameObject:
   m_Component:
   - component: {fileID: 496853775}
   m_Layer: 0
-  m_Name: Tip
+  m_Name: R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -744,7 +744,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496853774}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.131, z: 0}
+  m_LocalPosition: {x: -0.0006, y: 0.1128, z: 0.0576}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1818,12 +1818,7 @@ PrefabInstance:
     - target: {fileID: 4302076819476441347, guid: 0051d17889b5f804c8f62f674644587c,
         type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:RightArm'\n\tTransform
-        'mixamorig:Head'\n\tTransform 'mixamorig:LeftArm'\n\tTransform 'mixamorig:RightHand'\n\tTransform
-        'mixamorig:Hips'\n\tTransform 'mixamorig:RightShoulder'\n\tTransform 'mixamorig:LeftForeArm'\n\tTransform
-        'mixamorig:Spine2'\n\tTransform 'mixamorig:RightForeArm'\n\tand more ..."
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6183460126144738559, guid: 0051d17889b5f804c8f62f674644587c,
         type: 3}
@@ -1905,6 +1900,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7954513816030175670, guid: 0051d17889b5f804c8f62f674644587c,
+        type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 496853775}
     - target: {fileID: 7954513816030175670, guid: 0051d17889b5f804c8f62f674644587c,
         type: 3}
       propertyPath: playerReachZone

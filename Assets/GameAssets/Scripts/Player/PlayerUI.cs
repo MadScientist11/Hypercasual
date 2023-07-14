@@ -12,23 +12,23 @@ namespace Hypercasual.Player
     {
         [SerializeField] private TextMeshProUGUI _foodCounterText;
         private Vector3 _foodCounterInitialPosition;
-        private ILevelService _levelService;
+        private ILevelManager _levelManager;
 
         [Inject]
-        public void Construct(ILevelService levelService)
+        public void Construct(ILevelManager levelManager)
         {
-            _levelService = levelService;
+            _levelManager = levelManager;
         }
 
         private void Start()
         {
             _foodCounterInitialPosition = _foodCounterText.transform.position;
-            _levelService.LevelStatusChanged += AnimateFoodCounterText;
+            _levelManager.LevelStatusChanged += AnimateFoodCounterText;
         }
 
         private void OnDestroy()
         {
-            _levelService.LevelStatusChanged -= AnimateFoodCounterText;
+            _levelManager.LevelStatusChanged -= AnimateFoodCounterText;
         }
 
         private void AnimateFoodCounterText(LevelInfo info)

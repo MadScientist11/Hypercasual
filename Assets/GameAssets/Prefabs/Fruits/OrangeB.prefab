@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e50c72de5f7a4364daf7564145b8525a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _foodType: 2
+  <FoodType>k__BackingField: 2
 --- !u!135 &1279266590906991374
 SphereCollider:
   m_ObjectHideFlags: 0

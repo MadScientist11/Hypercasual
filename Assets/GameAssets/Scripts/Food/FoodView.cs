@@ -28,7 +28,6 @@ namespace Hypercasual.Food
         {
             _gameFactory = gameFactory;
             _objectPool = objectPool;
-            LifetimeScope.Find<GameLifetimeScope>().Container.Inject(this); //TODO: Shouldn't be here
         }
 
         private void Awake()
@@ -43,8 +42,7 @@ namespace Hypercasual.Food
             switch (state)
             {
                 case FoodState.OnTheAssemblyLine:
-                    CachedTransform.rotation = _initialRotation;
-                    CachedTransform.localScale = _initialSize;
+                    ResetScaleAndRotation();
                     GetComponent<Rigidbody>().isKinematic = true;
                     CachedTransform.SetParent(_gameFactory.FoodParent.transform);
                     IsProcessed = false;
@@ -61,6 +59,12 @@ namespace Hypercasual.Food
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
+        }
+
+        public void ResetScaleAndRotation()
+        {
+            CachedTransform.rotation = _initialRotation;
+            CachedTransform.localScale = _initialSize;
         }
 
 

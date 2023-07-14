@@ -10,24 +10,24 @@ namespace Hypercasual.UI
     {
         [SerializeField] private TextMeshProUGUI _objectiveText;
         [SerializeField] private TextMeshProUGUI _foodCountText;
-        private ILevelService _levelService;
+        private ILevelManager _levelManager;
 
         [Inject]
-        public void Construct(ILevelService levelService)
+        public void Construct(ILevelManager levelManager)
         {
-            _levelService = levelService;
+            _levelManager = levelManager;
         }
 
         private void OnEnable()
         {
-            _objectiveText.text = $"Collect {_levelService.CurrentLevel.FoodCount} {_levelService.CurrentLevel.Food}s";
+            _objectiveText.text = $"Collect {_levelManager.CurrentLevel.FoodCount} {_levelManager.CurrentLevel.Food}s";
             UpdateCount();
-            _levelService.LevelStatusChanged += OnLevelStatusChanged;
+            _levelManager.LevelStatusChanged += OnLevelStatusChanged;
         }
 
         private void OnDisable()
         {
-            _levelService.LevelStatusChanged -= OnLevelStatusChanged;
+            _levelManager.LevelStatusChanged -= OnLevelStatusChanged;
         }
 
         private void OnLevelStatusChanged(LevelInfo levelStatus)
@@ -37,7 +37,7 @@ namespace Hypercasual.UI
 
         private void UpdateCount()
         {
-            _foodCountText.text = $"Remaining Count: {_levelService.CurrentLevel.FoodCount}";
+            _foodCountText.text = $"Remaining Count: {_levelManager.CurrentLevel.FoodCount}";
         }
     }
 }

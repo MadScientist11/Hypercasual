@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e50c72de5f7a4364daf7564145b8525a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _foodType: 1
+  <FoodType>k__BackingField: 1
 --- !u!65 &-3118490487580304849
 BoxCollider:
   m_ObjectHideFlags: 0

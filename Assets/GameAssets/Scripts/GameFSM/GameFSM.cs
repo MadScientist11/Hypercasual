@@ -7,7 +7,7 @@ namespace Hypercasual.GameFSM
 {
     public class GameFSM
     {
-        public ILevelService LevelService { get; }
+        public ILevelManager LevelManager { get; }
         public IGameFactory GameFactory { get; }
         public IWindowManager WindowManager { get; }
         public PlayerAnimator Player { get; }
@@ -22,7 +22,7 @@ namespace Hypercasual.GameFSM
         private IGameState _currentState;
 
 
-        public GameFSM(IGameFactory gameFactory, IWindowManager windowManager, ILevelService levelService,
+        public GameFSM(IGameFactory gameFactory, IWindowManager windowManager, ILevelManager levelManager,
             PlayerAnimator player,
             AssemblyLine.AssemblyLine assemblyLine,
             CameraAnimator cameraAnimator,
@@ -30,7 +30,7 @@ namespace Hypercasual.GameFSM
         {
             Confetti = confetti;
             CameraAnimator = cameraAnimator;
-            LevelService = levelService;
+            LevelManager = levelManager;
             AssemblyLine = assemblyLine;
             Player = player;
             _states = new Dictionary<GameFlow, IGameState>

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Hypercasual.Services
 {
-    public interface ILevelService : IService
+    public interface ILevelManager : IService
     {
         event Action<LevelInfo> LevelStatusChanged;
         event Action OnLevelCompleted;
@@ -14,17 +14,16 @@ namespace Hypercasual.Services
         void CheckFood(FoodView food);
     }
 
-    public class LevelService : ILevelService
+    public class LevelManager : ILevelManager
     {
+        public LevelInfo CurrentLevel { get; private set; }
         public event Action<LevelInfo> LevelStatusChanged;
         public event Action OnLevelCompleted;
 
         private int _currentLevelIndex;
-        public LevelInfo CurrentLevel { get; private set; }
-
         private readonly IDataProvider _dataProvider;
 
-        public LevelService(IDataProvider dataProvider)
+        public LevelManager(IDataProvider dataProvider)
         {
             _dataProvider = dataProvider;
         }
@@ -39,7 +38,7 @@ namespace Hypercasual.Services
             AllLevels allLevels = _dataProvider.GetData<AllLevels>();
             
             Debug.Log(_currentLevelIndex);
-            Hypercasual.Level.Level levelData = allLevels[_currentLevelIndex];
+            Level.Level levelData = allLevels[_currentLevelIndex];
             CurrentLevel = new LevelInfo()
             {
                 Food = levelData.Food,

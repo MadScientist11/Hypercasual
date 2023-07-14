@@ -23,13 +23,13 @@ namespace Hypercasual.GameFSM
 
         public void Exit()
         {
-            _context.LevelService.OnLevelCompleted -= OnLevelCompleted;
+            _context.LevelManager.OnLevelCompleted -= OnLevelCompleted;
         }
 
         private void InitializeLevel()
         {
-            _context.LevelService.LoadNextLevel();
-            _context.LevelService.OnLevelCompleted += OnLevelCompleted;
+            _context.LevelManager.LoadNextLevel();
+            _context.LevelManager.OnLevelCompleted += OnLevelCompleted;
         }
 
         private void OnLevelCompleted()
