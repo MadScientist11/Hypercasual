@@ -3,67 +3,69 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-
-public class SceneSwitcher : EditorWindow
+namespace Hypercasual.Editor
 {
-    private  List<string> scenes = new List<string>();
+    public class SceneSwitcher : EditorWindow
+    {
+        private  List<string> scenes = new List<string>();
 
-    private ulong iterator;
+        private ulong iterator;
 
   
-    [MenuItem("Window/General/SceneSwitcher")]
-    private static void OpenWindow()
-    {
-        GetWindow<SceneSwitcher>().Show();
-    }
-
-
-    private void CheckForScenesInBuildSettings()
-    {
-
-        foreach (var editorScene in EditorBuildSettings.scenes)
+        [MenuItem("Window/General/SceneSwitcher")]
+        private static void OpenWindow()
         {
-
-            SceneAsset scn = AssetDatabase.LoadAssetAtPath(editorScene.path, typeof(SceneAsset)) as SceneAsset;
-            scenes.Add(scn.name);
+            GetWindow<SceneSwitcher>().Show();
         }
 
-    }
 
-    private void OnEnable()
-    {
-        CheckForScenesInBuildSettings();
-    }
-    void OnInspectorUpdate()
-    {
-            Repaint();
-    }
-
-    private Color GetButtonColor()
-    {
-        iterator++;
-        return Color.HSVToRGB(Mathf.Sin(iterator) * .225f + .325f, 1, 1);
-    }
-
-
-    protected  void OnGUI()
-    {
-       
-        DrawSceneButtons();
-    }
-
-
-    private void DrawSceneButtons()
-    {
-        for (int i = 0; i < EditorBuildSettings.scenes.Length; i++)
+        private void CheckForScenesInBuildSettings()
         {
 
-            Rect rt = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(30));
-
-            if (GUI.Button(rt, scenes[i]))
+            foreach (var editorScene in EditorBuildSettings.scenes)
             {
-                EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
-                EditorSceneManager.OpenScene(EditorBuildSettings.scenes[i].path);
+
+                SceneAsset scn = AssetDatabase.LoadAssetAtPath(editorScene.path, typeof(SceneAsset)) as SceneAsset;
+                scenes.Add(scn.name);
+            }
+
+        }
+
+        private void OnEnable()
+        {
+            CheckForScenesInBuildSettings();
+        }
+        void OnInspectorUpdate()
+        {
+            Repaint();
+        }
+
+        private Color GetButtonColor()
+        {
+            iterator++;
+            return Color.HSVToRGB(Mathf.Sin(iterator) * .225f + .325f, 1, 1);
+        }
+
+
+        protected  void OnGUI()
+        {
+       
+            DrawSceneButtons();
+        }
+
+
+        private void DrawSceneButtons()
+        {
+            for (int i = 0; i < EditorBuildSettings.scenes.Length; i++)
+            {
+
+                Rect rt = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(30));
+
+                if (GUI.Button(rt, scenes[i]))
+                {
+                    EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+                    EditorSceneManager.OpenScene(EditorBuildSettings.scenes[i].path);
+                }
             }
         }
     }

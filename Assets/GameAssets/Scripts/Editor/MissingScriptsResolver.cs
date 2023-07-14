@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using static System.StringComparison;
 
-namespace SteampunkChess
+namespace Hypercasual.Editor
 {
     public static class MissingScriptsResolver
     {

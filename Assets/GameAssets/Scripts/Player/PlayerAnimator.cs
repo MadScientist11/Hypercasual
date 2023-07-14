@@ -11,14 +11,14 @@ namespace Hypercasual.Player
         
         private const string WinState = "Win";
         private const string IdleState = "Idle";
-        private static readonly int GrabItem = Animator.StringToHash("GrabItem");
+        private static readonly int GrabFood = Animator.StringToHash("GrabItem");
         
         private Action _onGrabFoodCompleted;
 
         public void PlayGrabFoodAnimation(Action onCompleted = null)
         {
             _onGrabFoodCompleted = onCompleted;
-            _animator.SetTrigger(GrabItem);
+            _animator.SetTrigger(GrabFood);
         }
 
         public void PlayWinAnimation()

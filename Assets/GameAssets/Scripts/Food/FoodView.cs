@@ -1,10 +1,4 @@
-using System;
-using Hypercasual.Player;
-using Hypercasual.Scopes;
-using Hypercasual.Services;
 using UnityEngine;
-using VContainer;
-using VContainer.Unity;
 
 namespace Hypercasual.Food
 {
