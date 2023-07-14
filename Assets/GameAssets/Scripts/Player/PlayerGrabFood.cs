@@ -73,7 +73,7 @@ namespace Hypercasual.Player
 
         private IEnumerator PlaceItemInBasket()
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(.7f);
             
             _currentFood.ResetScaleAndRotation();
             _currentFood.CachedTransform.localScale *= _inHandScaleFactor;

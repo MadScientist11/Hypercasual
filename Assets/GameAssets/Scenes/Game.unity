@@ -1803,6 +1803,34 @@ PrefabInstance:
       propertyPath: m_Weight
       value: 0.35
       objectReference: {fileID: 0}
+    - target: {fileID: 1907428310, guid: 0051d17889b5f804c8f62f674644587c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.409
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907428310, guid: 0051d17889b5f804c8f62f674644587c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.391
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907428310, guid: 0051d17889b5f804c8f62f674644587c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.029
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907428310, guid: 0051d17889b5f804c8f62f674644587c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.79247195
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907428310, guid: 0051d17889b5f804c8f62f674644587c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.35169053
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907428310, guid: 0051d17889b5f804c8f62f674644587c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.32916978
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907428310, guid: 0051d17889b5f804c8f62f674644587c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.374098
+      objectReference: {fileID: 0}
     - target: {fileID: 1910773107, guid: 0051d17889b5f804c8f62f674644587c, type: 3}
       propertyPath: m_Data.m_Tip
       value: 
@@ -1818,7 +1846,12 @@ PrefabInstance:
     - target: {fileID: 4302076819476441347, guid: 0051d17889b5f804c8f62f674644587c,
         type: 3}
       propertyPath: m_WarningMessage
-      value: 
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:RightArm'\n\tTransform
+        'mixamorig:Head'\n\tTransform 'mixamorig:LeftArm'\n\tTransform 'mixamorig:RightHand'\n\tTransform
+        'mixamorig:Hips'\n\tTransform 'mixamorig:RightShoulder'\n\tTransform 'mixamorig:LeftForeArm'\n\tTransform
+        'mixamorig:Spine2'\n\tTransform 'mixamorig:RightForeArm'\n\tand more ..."
       objectReference: {fileID: 0}
     - target: {fileID: 6183460126144738559, guid: 0051d17889b5f804c8f62f674644587c,
         type: 3}

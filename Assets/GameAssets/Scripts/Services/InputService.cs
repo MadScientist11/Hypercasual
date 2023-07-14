@@ -14,7 +14,7 @@ namespace Hypercasual.Services
     public class InputService : IInputService, GameActions.IPlayerActions
     {
         public event Action OnLeftMouseButtonClicked;
-        public Vector3 MousePosition => Mouse.current.position.ReadValue();
+        public Vector3 MousePosition { get; private set; }
 
         private GameActions _input;
 
@@ -34,6 +34,11 @@ namespace Hypercasual.Services
         {
             if (context.phase == InputActionPhase.Performed)
                 OnLeftMouseButtonClicked?.Invoke();
+        }
+
+        public void OnMousePosition(InputAction.CallbackContext context)
+        {
+            MousePosition = context.ReadValue<Vector2>();
         }
     }
 }
