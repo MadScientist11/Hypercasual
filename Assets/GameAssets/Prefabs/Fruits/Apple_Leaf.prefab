@@ -28,14 +28,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 506631196974488466}
-  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.6820002, y: 1.069, z: 0.086}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6020321736493455043
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 506631196974488466}
-  m_Mesh: {fileID: 3552412764963411429, guid: 635e914fceb444b41b8f79893b32d36a, type: 3}
+  m_Mesh: {fileID: 3552412764963411429, guid: e185aff03c3096549838eaaa4300fc24, type: 3}
 --- !u!23 &3042242896548474248
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e50c72de5f7a4364daf7564145b8525a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FoodType: 0
+  <FoodType>k__BackingField: 0
 --- !u!135 &-1290438357032281715
 SphereCollider:
   m_ObjectHideFlags: 0
